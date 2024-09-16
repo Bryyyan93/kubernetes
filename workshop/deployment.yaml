@@ -17,15 +17,15 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
-        livenessProbe:  # Indented one level deeper
+        livenessProbe:  # Debe estar dentro del contenedor especifico
           httpGet:
             path: /
             port: 80
           initialDelaySeconds: 15
           periodSeconds: 20
-        readinessProbe:  # Indented one level deeper
+        readinessProbe:  
           httpGet:
             path: /
             port: 80
           initialDelaySeconds: 5
-          periodSeconds: 10    
+          periodSeconds: 10
