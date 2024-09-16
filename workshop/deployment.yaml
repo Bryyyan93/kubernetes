@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-keepcoding
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-keepcoding
+  template:
+    metadata:
+      labels:
+        app: app-keepcoding
+    spec:
+      containers:
+      - name: contenedor-keepcoding
+        image: nginx:latest
+        ports:
+        - containerPort: 80
