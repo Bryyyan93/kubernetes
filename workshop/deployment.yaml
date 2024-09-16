@@ -17,15 +17,15 @@ spec:
         image: nginx:latest
         ports:
         - containerPort: 80
-      livenessProbe:  # Indented one level deeper
-        httpGet:
-          path: /
-          port: 80
-        initialDelaySeconds: 15
-        periodSeconds: 20
-      readinessProbe:  # Indented one level deeper
-        httpGet:
-          path: /
-          port: 80
-        initialDelaySeconds: 5
-        periodSeconds: 10    
+        livenessProbe:  # Indented one level deeper
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:  # Indented one level deeper
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10    
