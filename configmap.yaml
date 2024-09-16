@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-keepcoding
+data:
+  APP_ENV: "produccion"
+  APP_DEBUG: "false"
