@@ -31,4 +31,6 @@ spec:
           periodSeconds: 10
         envFrom:
         - secretRef:
-            name: secret-keepcoding  
+            name: secret-keepcoding
+        - configMapRef:
+            name: configmap-keepcoding      
