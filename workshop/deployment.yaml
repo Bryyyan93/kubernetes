@@ -15,6 +15,13 @@ spec:
       containers:
       - name: contenedor-keepcoding
         image: nginx:latest
+        resources:
+        limits:
+          cpu: "500m"
+          memory: "128Mi"
+        request:
+          cpu: "200m"
+          memory: "64Mi"
         ports:
         - containerPort: 80
         livenessProbe:  # Debe estar dentro del contenedor especifico

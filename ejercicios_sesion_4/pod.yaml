@@ -1,0 +1,15 @@
+apiVerdion: v1
+kind: Pod
+metadata:
+  name: mi-pod
+spec:
+  containers:
+    - name: resource-container
+      image: nginx
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "128Mi"
+        request:
+          cpu: "200m"
+          memory: "64Mi"  

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mi-pod
+  template:
+    metadata:
+      labels:
+        app: mi-pod
+    spec:
+      containers:
+      - name: fastapi-app
+        image: ghcr.io/ohmyplatform/fastapi-mariadb:main
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "20Mi"
