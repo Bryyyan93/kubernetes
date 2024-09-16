@@ -7,6 +7,18 @@ spec:
   selector:
     matchLabels:
       app: app-keepcoding
+    livenessProbe:
+      httpGet:
+      path: /
+      port: 80
+      initialDelaySeconds: 15
+      periodSeconds: 20
+    readinessProbe:    
+      httpGet:
+      path: /
+      port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 10      
   template:
     metadata:
       labels:
