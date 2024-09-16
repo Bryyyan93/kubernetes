@@ -30,5 +30,5 @@ spec:
           initialDelaySeconds: 5
           periodSeconds: 10
         envFrom:
-          - secretRef:
-          name: secret-keepcoding  
+          secretRef:
+            name: secret-keepcoding  
