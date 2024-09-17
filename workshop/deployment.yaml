@@ -15,22 +15,15 @@ spec:
       containers:
       - name: contenedor-keepcoding
         image: nginx:latest
-        resources:
-        limits:
-          cpu: "500m"
-          memory: "128Mi"
-        request:
-          cpu: "200m"
-          memory: "64Mi"
         ports:
         - containerPort: 80
-        livenessProbe:  # Debe estar dentro del contenedor especifico
+        livenessProbe:
           httpGet:
             path: /
             port: 80
           initialDelaySeconds: 15
           periodSeconds: 20
-        readinessProbe:  
+        readinessProbe:
           httpGet:
             path: /
             port: 80
@@ -40,4 +33,4 @@ spec:
         - secretRef:
             name: secret-keepcoding
         - configMapRef:
-            name: configmap-keepcoding      
+            name: configmap-keepcoding    
