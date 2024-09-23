@@ -66,9 +66,9 @@ spec:
         #  ports:
         #    - containerPort: 5432
         #      protocol: TCP
-          volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: db-data
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: db-data
       restartPolicy: Always
       imagePullSecrets:
         - name: docker-secret
