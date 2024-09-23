@@ -23,6 +23,11 @@ spec:
         io.kompose.service: db
     spec:
       containers:
+      - name: db
+        image: bryyyan/practica_contendores:appdata-k8s-v2
+        ports:
+        - containerPort: 5432
+          protocol: TCP
         - env:
             - name: DB_HOST
               valueFrom:
@@ -54,17 +59,19 @@ spec:
                 configMapKeyRef:
                   key: POSTGRES_DB
                   name: env-test1-env
-          image: bryyyan/practica_contendores:appdata-k8s-v2
-          name: db
-          imagePullSecrets:
-            - name: docker-secret
-          ports:
-            - containerPort: 5432
-              protocol: TCP
+        #  image: bryyyan/practica_contendores:appdata-k8s-v2
+        #  name: db
+        #  imagePullSecrets:
+        #    - name: docker-secret
+        #  ports:
+        #    - containerPort: 5432
+        #      protocol: TCP
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: db-data
       restartPolicy: Always
+      imagePullSecrets:
+        - name: docker-secret
       volumes:
         - name: db-data
           persistentVolumeClaim:
