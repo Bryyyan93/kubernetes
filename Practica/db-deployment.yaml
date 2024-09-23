@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db
+  name: db-postgres
 spec:
   replicas: 1
   selector:
