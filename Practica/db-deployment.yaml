@@ -25,7 +25,7 @@ spec:
         env:
         - name: DB_HOST
           valueFrom:
-            configKeyRef:
+            secretKeyRef:
               key: DB_HOST
               name: db-cred
         - name: DB_NAME
@@ -35,7 +35,7 @@ spec:
               name: env-test1-env
         - name: DB_PASS
           valueFrom:
-            configKeyRef:
+            secretKeyRef:
               key: DB_PASS
               name: db-cred
         - name: DB_PORT
@@ -50,7 +50,7 @@ spec:
               name: env-test1-env
         - name: POSTGRES_DB
           valueFrom:
-            configKeyRef:
+            secretKeyRef:
               key: POSTGRES_DB
               name: db-cred
         volumeMounts:
