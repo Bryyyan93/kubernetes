@@ -1,8 +1,6 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  labels:
-    app.k8s.io: web
   name: nginx-hpa
 spec:
   scaleTargetRef:
