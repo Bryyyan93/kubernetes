@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.k8s.io: adminer
-  name: adminer
+  name: adminer-deployment
 spec:
   replicas: 1
   selector:

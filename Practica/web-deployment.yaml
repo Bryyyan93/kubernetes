@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.k8s.io: web
-  name: web
+  name: web-deployment
 spec:
   replicas: 1
   selector:
