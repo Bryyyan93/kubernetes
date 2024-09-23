@@ -28,37 +28,37 @@ spec:
         ports:
         - containerPort: 5432
           protocol: TCP
-        - env:
-            - name: DB_HOST
-              valueFrom:
-                configMapKeyRef:
-                  key: DB_HOST
-                  name: env-test1-env
-            - name: DB_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: DB_NAME
-                  name: env-test1-env
-            - name: DB_PASS
-              valueFrom:
-                configMapKeyRef:
-                  key: DB_PASS
-                  name: env-test1-env
-            - name: DB_PORT
-              valueFrom:
-                configMapKeyRef:
-                  key: DB_PORT
-                  name: env-test1-env
-            - name: DB_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: DB_USER
-                  name: env-test1-env
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  key: POSTGRES_DB
-                  name: env-test1-env
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST
+              name: env-test1-env
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: DB_NAME
+              name: env-test1-env
+        - name: DB_PASS
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PASS
+              name: env-test1-env
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: DB_PORT
+              name: env-test1-env
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              key: DB_USER
+              name: env-test1-env
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_DB
+              name: env-test1-env
         #  image: bryyyan/practica_contendores:appdata-k8s-v2
         #  name: db
         #  imagePullSecrets:
