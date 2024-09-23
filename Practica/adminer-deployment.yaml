@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.k8s.io: adminer
-  name: adminer-deployment
+  name: adminer
 spec:
   replicas: 1
   selector:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - image: adminer
-          name: adminer-deployment
+          name: adminer
           ports:
             - containerPort: 8080
               protocol: TCP
