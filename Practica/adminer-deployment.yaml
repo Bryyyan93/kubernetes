@@ -1,18 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adminer-deployment
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.34.0 (cbf2835db)
   labels:
-    app: adminer
+    io.kompose.service: adminer
+  name: adminer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: adminer
+      io.kompose.service: adminer
   template:
     metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.34.0 (cbf2835db)
       labels:
-        app: adminer
+        io.kompose.service: adminer
     spec:
       containers:
         - image: adminer
