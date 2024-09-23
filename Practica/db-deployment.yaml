@@ -27,7 +27,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: DB_HOST
-              name: env-test1-env
+              name: db-cred
         - name: DB_NAME
           valueFrom:
             configMapKeyRef:
@@ -37,7 +37,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: DB_PASS
-              name: env-test1-env
+              name: db-cred
         - name: DB_PORT
           valueFrom:
             configMapKeyRef:
@@ -52,7 +52,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: POSTGRES_DB
-              name: env-test1-env
+              name: db-cred
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: db-data

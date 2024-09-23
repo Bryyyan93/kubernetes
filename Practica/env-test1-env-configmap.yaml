@@ -1,11 +1,11 @@
 apiVersion: v1
 data:
-  DB_HOST: db
+  #DB_HOST: db
   DB_NAME: test1
-  DB_PASS: prueba1
+  #DB_PASS: prueba1
   DB_PORT: "5432"
   DB_USER: prueba1
-  POSTGRES_DB: test1
+  #POSTGRES_DB: test1
 kind: ConfigMap
 metadata:
   labels:
