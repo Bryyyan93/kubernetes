@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: web-claim0
   labels:
-    io.app.service: web-claim0
+    app: web-claim0
 spec:
   accessModes:
     - ReadWriteOnce

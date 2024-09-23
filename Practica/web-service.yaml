@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: web-service
   labels:
-    io.app.service: web
+    app: web
 spec:
   type: ClusterIP
   ports:
@@ -11,4 +11,4 @@ spec:
     - port: 5000 # Puerto del contenedor escucha
       targetPort: 5000 # Puerto interno del contenedor
   selector:
-    io.app.service: web
+    app: web

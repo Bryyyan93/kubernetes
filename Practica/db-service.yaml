@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: db-service
   labels:
-    io.app.service: db
+    app: db
 spec:
   ports:
     - name: "5432"
       port: 5432
       targetPort: 5432
   selector:
-    io.app.service: db
+    app: db

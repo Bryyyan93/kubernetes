@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: db-deployment
   labels:
-    io.app.service: db
+    app: db
 spec:
   selector:
     matchLabels:
-      io.app.service: db
+      app: db
   replicas: 1
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        io.app.service: db
+        app: db
     spec:
       containers:
       - name: db

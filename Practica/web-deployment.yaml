@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: web-deployment
   labels:
-    io.app.service: web
+    app: web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.app.service: web
+      app: web
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        io.app.service: web
+        app: web
     spec:
       containers:
       - name: web

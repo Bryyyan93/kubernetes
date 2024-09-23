@@ -10,4 +10,4 @@ kind: ConfigMap
 metadata:
   name: env-test1-env
   labels:
-    io.app.service: env-test1-env
+    app: env-test1-env
