@@ -8,6 +8,4 @@ data:
   POSTGRES_DB: test1
 kind: ConfigMap
 metadata:
-  labels:
-    io.kompose.service: db-env-test1-env
   name: env-test1-env
