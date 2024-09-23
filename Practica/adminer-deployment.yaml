@@ -1,9 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.34.0 (cbf2835db)
   labels:
     io.kompose.service: adminer
   name: adminer
@@ -14,9 +11,6 @@ spec:
       io.kompose.service: adminer
   template:
     metadata:
-      annotations:
-        kompose.cmd: kompose convert
-        kompose.version: 1.34.0 (cbf2835db)
       labels:
         io.kompose.service: adminer
     spec:
