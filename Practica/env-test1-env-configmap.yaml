@@ -9,5 +9,5 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    io.kompose.service: db-env_test1-env
-  name: env_test1-env
+    io.kompose.service: db-env-test1-env
+  name: env-test1-env

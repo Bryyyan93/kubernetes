@@ -28,32 +28,32 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: DB_HOST
-                  name: env_test1-env
+                  name: env-test1-env
             - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
                   key: DB_NAME
-                  name: env_test1-env
+                  name: env-test1-env
             - name: DB_PASS
               valueFrom:
                 configMapKeyRef:
                   key: DB_PASS
-                  name: env_test1-env
+                  name: env-test1-env
             - name: DB_PORT
               valueFrom:
                 configMapKeyRef:
                   key: DB_PORT
-                  name: env_test1-env
+                  name: env-test1-env
             - name: DB_USER
               valueFrom:
                 configMapKeyRef:
                   key: DB_USER
-                  name: env_test1-env
+                  name: env-test1-env
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
                   key: POSTGRES_DB
-                  name: env_test1-env
+                  name: env-test1-env
           image: bryyyan/practica_contendores:appdata_v2
           name: db
           ports:
