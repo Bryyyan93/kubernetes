@@ -68,8 +68,8 @@ spec:
       imagePullSecrets:
         - name: docker-secret
       volumeMounts:
-        - mountPath: /app/logs
-          name: web-claim0
+      - mountPath: /app/logs
+        name: web-claim0
       restartPolicy: Always
       volumes:
         - name: web-claim0
