@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - image: adminer
-          name: adminer
+          name: adminer-deployment
           ports:
             - containerPort: 8080
               protocol: TCP
