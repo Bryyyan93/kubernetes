@@ -65,11 +65,11 @@ spec:
                 name: env-test1-env
           #image: bryyyan/practica_contendores:appweb-k8s-v2
           #name: web
+        volumeMounts:
+          - mountPath: /app/logs
+            name: web-claim0
       imagePullSecrets:
-        - name: docker-secret
-      volumeMounts:
-        - mountPath: /app/logs
-          name: web-claim0
+        - name: docker-secret      
       restartPolicy: Always
       volumes:
         - name: web-claim0
