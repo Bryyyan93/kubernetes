@@ -60,13 +60,14 @@ spec:
         volumeMounts:
           - mountPath: /app/logs
             name: web-claim0
+        # Limitar CPU a 100 milinucleos
+        resources:
+          requests:
+            cpu: 100m    
       # Secreto para inicializar docker hub y descargar las imagenes
       imagePullSecrets:
         - name: docker-secret      
       restartPolicy: Always
-      # Limitar CPU a 100 milinucleos
-      resources:
-        cpu: 100m
       # Volumen para la base de datos de la app  
       volumes:
         - name: web-claim0
