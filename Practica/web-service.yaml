@@ -8,16 +8,9 @@ metadata:
     io.kompose.service: web
   name: web
 spec:
-  type: LoadBalancer
+  ports:
+    - name: "5000"
+      port: 5000
+      targetPort: 5000
   selector:
     io.kompose.service: web
-  ports:
-    - protocol: TCP
-      port: 5000
-      targetPort: http
-  #ports:
-  #  - name: "5000"
-  #    port: 5000
-  #    targetPort: 5000
-  #selector:
-  #  io.kompose.service: web
