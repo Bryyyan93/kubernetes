@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    io.kompose.service: web-claim0
+    app.k8s.io: web-claim0
   name: web-claim0
 spec:
   accessModes:

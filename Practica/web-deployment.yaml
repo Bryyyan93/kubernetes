@@ -2,19 +2,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: web
+    app.k8s.io: web
   name: web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: web
+      app.k8s.io: web
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        io.kompose.service: web
+        app.k8s.io: web
     spec:
       containers:
       - name: web

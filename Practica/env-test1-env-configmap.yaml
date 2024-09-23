@@ -9,5 +9,5 @@ data:
 kind: ConfigMap
 metadata:
   labels:
-    io.kompose.service: db-env-test1-env
+    app.k8s.io: db-env-test1-env
   name: env-test1-env
