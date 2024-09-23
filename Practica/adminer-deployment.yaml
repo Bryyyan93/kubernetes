@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: adminer-deployment
   labels:
-    app: adminer
+    io.app.service: adminer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: adminer
+      io.app.service: adminer
   template:
     metadata:
       labels:
-        app: adminer
+        io.app.service: adminer
     spec:
       containers:
         - image: adminer
