@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.k8s.io: db
-  name: db-deploy
+  name: db
 spec:
   replicas: 1
   selector:
@@ -17,7 +17,7 @@ spec:
         app.k8s.io: db
     spec:
       containers:
-      - name: db-deploy
+      - name: db
         image: bryyyan/practica_contendores:appdata-k8s-v2
         ports:
         - containerPort: 5432
