@@ -63,8 +63,6 @@ spec:
               configMapKeyRef:
                 key: POSTGRES_DB
                 name: env-test1-env
-          #image: bryyyan/practica_contendores:appweb-k8s-v2
-          #name: web
         volumeMounts:
           - mountPath: /app/logs
             name: web-claim0

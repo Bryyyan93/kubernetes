@@ -59,13 +59,6 @@ spec:
             configMapKeyRef:
               key: POSTGRES_DB
               name: env-test1-env
-        #  image: bryyyan/practica_contendores:appdata-k8s-v2
-        #  name: db
-        #  imagePullSecrets:
-        #    - name: docker-secret
-        #  ports:
-        #    - containerPort: 5432
-        #      protocol: TCP
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: db-data
