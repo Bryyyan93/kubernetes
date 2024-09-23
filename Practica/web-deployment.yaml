@@ -60,6 +60,8 @@ spec:
                   name: env-test1-env
           image: bryyyan/practica_contendores:appweb_v2
           name: web
+          imagePullSecrets:
+            - name: docker-secret
           ports:
             - containerPort: 5000
               protocol: TCP
