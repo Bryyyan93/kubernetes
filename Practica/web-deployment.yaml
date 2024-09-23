@@ -28,48 +28,48 @@ spec:
         ports:
           - containerPort: 5000
             protocol: TCP
-      command:
-        - sh
-        - -c
-        - sleep 10 && python app.py
-      env:
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: DB_HOST
-              name: env-test1-env
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              key: DB_NAME
-              name: env-test1-env
-        - name: DB_PASS
-          valueFrom:
-            configMapKeyRef:
-              key: DB_PASS
-              name: env-test1-env
-        - name: DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              key: DB_PORT
-              name: env-test1-env
-        - name: DB_USER
-          valueFrom:
-            configMapKeyRef:
-              key: DB_USER
-              name: env-test1-env
-        - name: POSTGRES_DB
-          valueFrom:
-            configMapKeyRef:
-              key: POSTGRES_DB
-              name: env-test1-env
-        #image: bryyyan/practica_contendores:appweb-k8s-v2
-        #name: web
+        command:
+          - sh
+          - -c
+          - sleep 10 && python app.py
+        env:
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: DB_HOST
+                name: env-test1-env
+          - name: DB_NAME
+            valueFrom:
+              configMapKeyRef:
+                key: DB_NAME
+                name: env-test1-env
+          - name: DB_PASS
+            valueFrom:
+              configMapKeyRef:
+                key: DB_PASS
+                name: env-test1-env
+          - name: DB_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: DB_PORT
+                name: env-test1-env
+          - name: DB_USER
+            valueFrom:
+              configMapKeyRef:
+                key: DB_USER
+                name: env-test1-env
+          - name: POSTGRES_DB
+            valueFrom:
+              configMapKeyRef:
+                key: POSTGRES_DB
+                name: env-test1-env
+          #image: bryyyan/practica_contendores:appweb-k8s-v2
+          #name: web
       imagePullSecrets:
         - name: docker-secret
       volumeMounts:
-      - mountPath: /app/logs
-        name: web-claim0
+        - mountPath: /app/logs
+          name: web-claim0
       restartPolicy: Always
       volumes:
         - name: web-claim0
