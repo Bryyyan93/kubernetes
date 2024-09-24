@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app.k8s.io: web
-  name: web
+  name: web-srv
 spec:
   type: ClusterIP
   ports:
