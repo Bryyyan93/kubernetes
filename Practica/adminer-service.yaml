@@ -3,11 +3,11 @@ kind: Service
 metadata:
   labels:
     app.k8s.io: adminer
-  name: adminer
+  name: adminer-srv
 spec:
   ports:
-    - name: "8080"
-      port: 8080
+    - protocol: TCP
+      port: 50
       targetPort: 8080
   selector:
     app.k8s.io: adminer

@@ -26,4 +26,9 @@ Para realizar las pruebas se ha hecho de la siguiente manera:
 - Comprobar que se esta ejecutando: `kubectl get hpa -w`
 - Aumentar la carga de trabajo para verificar el autoescalado `kubectl run load-generator-manual --image=busybox --command -- sh -c 'while true; do wget -q -O- http://nginx-hpa >dev/null 2>&1; done'`
 ### Exponer la Aplicación al exterior
+Se hace uso del manifiesto del tipo `Ingress` el cual llamamos `web-ingress.yaml`.
+Para añadir contenido a la aplicacion Flask se usará la siguiente petición:
+``` 
 curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://localhost:5000/notes
+```
+
