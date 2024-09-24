@@ -67,7 +67,7 @@ spec:
           requests:
             cpu: 100m
           limits:
-            cpu: 200m      
+            cpu: 200m     
       # Secreto para inicializar docker hub y descargar las imagenes
       imagePullSecrets:
         - name: docker-secret      
