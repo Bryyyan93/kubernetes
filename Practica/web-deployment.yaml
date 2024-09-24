@@ -63,7 +63,9 @@ spec:
         # Limitar CPU a 100 milinucleos
         resources:
           requests:
-            cpu: 100m    
+            cpu: 100m
+          limits:
+            cpu: 200m      
       # Secreto para inicializar docker hub y descargar las imagenes
       imagePullSecrets:
         - name: docker-secret      
