@@ -36,8 +36,21 @@ La aplicación principal:
 http://192-168-49-2.nip.io/notes
 Redirección a la monitorización de DDBB
 http://192-168-49-2.nip.io/admin
+Para añadir notas:
+curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://192-168-49-2.nip.io/notes
 ```
 ### Garantizar la resiliencia de la Aplicación
 Para garantizar la resiliencia de la aplicación se hará uso de los manifiestos de `Liveness` y `Readines`.
+
+Pruebas en liveness
+- Simular fallo en el estado /health
+curl -X POST http://192-168-49-2.nip.io/set_health/unhealthy
+- Restaurar el estado /health
+curl -X POST http://192-168-49-2.nip.io/set_health/healthy
+- Simular fallo en el estado /ready
+curl -X POST http://192-168-49-2.nip.io/set_ready/notready
+- Restaurar el estado /health
+curl -X POST http://192-168-49-2.nip.io/set_ready/ready
+
 
 
