@@ -3,12 +3,12 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: app-hpa
 spec:
-  maxReplicas: 5
+  maxReplicas: 5 #numero maximo de replicas
   metrics:
   - resource:
       name: cpu
       target:
-        averageUtilization: 20
+        averageUtilization: 20 # Modificar el porcentaje de utilizacion de CPU
         type: Utilization
     type: Resource
   minReplicas: 2
