@@ -25,3 +25,5 @@ Para realizar las pruebas se ha hecho de la siguiente manera:
 - Comporbar que esta habilitado el servicio de metrics `minikube addons enable metrics-server` 
 - Comprobar que se esta ejecutando: `kubectl get hpa -w`
 - Aumentar la carga de trabajo para verificar el autoescalado `kubectl run load-generator-manual --image=busybox --command -- sh -c 'while true; do wget -q -O- http://nginx-hpa >dev/null 2>&1; done'`
+### Exponer la Aplicación al exterior
+

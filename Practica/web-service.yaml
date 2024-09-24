@@ -7,8 +7,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    # - name: "5000"
-    - port: 5000 # Puerto del contenedor escucha
+    - protocol: TCP
+      port: 80 # Puerto expuesto al que apunta el Ingress
       targetPort: 5000 # Puerto interno del contenedor
   selector:
     app.k8s.io: web
