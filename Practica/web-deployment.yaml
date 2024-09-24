@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: web-srv
-        image: bryyyan/practica_contendores:appweb-k8s-v2
+        image: bryyyan/practica_contendores:appweb-k8s-v3
         ports:
           - containerPort: 5000
             protocol: TCP
@@ -62,12 +62,31 @@ spec:
         volumeMounts:
           - mountPath: /app/logs
             name: web-claim0
-        # Limitar CPU a 100 milinucleos
+        # Limitar CPU a 1 CPU y 500M
         resources:
           requests:
-            cpu: 100m
+            cpu: 100m # Solicita un 10% al iniciar
           limits:
-            cpu: 200m     
+            cpu: "1"
+            memory: 500Mi
+        # Liveness: verifica si el contenedor está "vivo"
+        livenessProbe:
+          httpGet:
+            path: /health   # Endpoint de salud
+            port: 5000      # El puerto de la aplicación Flask
+            scheme: HTTP    # Protocolo HTTP
+          initialDelaySeconds: 20  # Espera 20 segundos antes de realizar la primera verificación
+          periodSeconds: 10        # Verifica cada 10 segundos
+          failureThreshold: 3      # Después de 3 fallos consecutivos, reinicia el contenedor
+        # Readiness Probe: Comprueba que la app está lista para recibir tráfico
+        readinessProbe:
+          httpGet:
+            path: /ready    # Endpoint de readiness
+            port: 5000      # El puerto de la aplicación Flask
+            scheme: HTTP    # Protocolo HTTP
+          initialDelaySeconds: 5   # Espera 5 segundos antes de realizar la primera verificación
+          periodSeconds: 5         # Verifica cada 5 segundos
+          failureThreshold: 1      # Después de 1 fallo, no dirige tráfico a este contenedor          
       # Secreto para inicializar docker hub y descargar las imagenes
       imagePullSecrets:
         - name: docker-secret      

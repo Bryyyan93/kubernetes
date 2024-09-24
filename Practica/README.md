@@ -37,3 +37,7 @@ http://192-168-49-2.nip.io/notes
 Redirección a la monitorización de DDBB
 http://192-168-49-2.nip.io/admin
 ```
+### Garantizar la resiliencia de la Aplicación
+Para garantizar la resiliencia de la aplicación se hará uso de los manifiestos de `Liveness` y `Readines`.
+
+
