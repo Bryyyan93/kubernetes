@@ -1,11 +1,10 @@
 # Práctica: Despliegue de una aplicación en Kubernetes
 ## Objetivos Específicos
 - **Crear un chart de Helm**: Desarrollar un chart de Helm que incluya todos los recursos necesarios para desplegar la aplicación en Kubernetes.
-- **Configurar la Persistencia de Datos**: Implementar un mecanismo que asegure que los datos de la base de datos sean almacenados de manera duradera.
-- **Gestionar Configuración Sensible**: Asegurar que las credenciales y configuraciones sensibles se manejen de forma segura, utilizando los recursos adecuados de Kubernetes y evitando cualquier tipo de información sensible en el repositorio.
+
 - **Asegurar Alta Disponibilidad (HA)**: La aplicación deberá estar siempre disponible configurando un mínimo número de réplicas que asegure una alta disponibilidad.
 - **Escalar la Aplicación de manera automática**: El despliegue de la aplicación debe ser escalable, permitiendo ajustar el número de réplicas en base al uso de CPU. Esta configuración debe estar expuesta en el chart para poder ajustarse mediante el fichero values.yaml. Por defecto la aplicación debe escalar cuando supere el 70% de uso de CPU.
-- **Exponer la Aplicación al exterior**: Configurar los recursos necesarios para que la aplicación sea accesible desde fuera del clúster de Kubernetes.
+
 - **Garantizar la resiliencia de la Aplicación**: La aplicación deberá poder recuperarse ante errores. Aplicar el mecanismo que nos permite reiniciar la aplicación cuando no está funcionando y evitar que llegue tráfico a los PODs que no responden correctamente.
 - **Documentación**: Elaborar una documentación clara que explique cómo desplegar y gestionar la aplicación utilizando el chart de Helm creado.
 
@@ -31,4 +30,10 @@ Para añadir contenido a la aplicacion Flask se usará la siguiente petición:
 ``` 
 curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://localhost:5000/notes
 ```
-
+Para poder acceder a la aplicación se deberá hacer de la siguiente manera:
+```
+La aplicación principal:
+http://192-168-49-2.nip.io/notes
+Redirección a la monitorización de DDBB
+http://192-168-49-2.nip.io/admin
+```

@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       app.k8s.io: db
+  # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos    
   strategy:
     type: Recreate
   template:
@@ -22,6 +23,7 @@ spec:
         ports:
         - containerPort: 5432
           protocol: TCP
+        # Variables de entorno para configura la base de datos  
         env:
         - name: DB_HOST
           valueFrom:
@@ -37,7 +39,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: DB_PASS
-              name: db-cred
+              name: db-cred # Uso de secret para variables sensibles
         - name: DB_PORT
           valueFrom:
             configMapKeyRef:
@@ -53,10 +55,12 @@ spec:
             secretKeyRef:
               key: POSTGRES_DB
               name: db-cred
+        # Montar un volumen persistente      
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: db-data
       restartPolicy: Always
+      # Necesario para extraer la imagen
       imagePullSecrets:
         - name: docker-secret
       volumes:

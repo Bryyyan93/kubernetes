@@ -22,10 +22,12 @@ spec:
         ports:
           - containerPort: 5000
             protocol: TCP
+        # Comando que espera a los la DDBB este lista    
         command:
           - sh
           - -c
           - sleep 10 && python app.py
+        # Definir variables de entorno  
         env:
           - name: DB_HOST
             valueFrom:
@@ -70,7 +72,7 @@ spec:
       imagePullSecrets:
         - name: docker-secret      
       restartPolicy: Always
-      # Volumen para la base de datos de la app  
+      # Volumen para almacenar logs
       volumes:
         - name: web-claim0
           persistentVolumeClaim:
