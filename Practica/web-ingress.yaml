@@ -4,9 +4,10 @@ metadata:
   labels:
     app.k8s.io: web
   name: web-igrss
+  namespace: default
 spec:
   rules:
-  - host: web-127-0-0-1.nip.io
+  - host: localhost #web-127-0-0-1.nip.io
     http:
       paths:
       - path: /notes
