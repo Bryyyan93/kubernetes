@@ -24,12 +24,14 @@ web:
   service:
     name: web-srv
     targetport: 80 # Puerto expuesto al que apunta el Ingress
-  # Volumen donde se guardan los logs de la web  
+  # Volumen donde se guardan los logs de la web
+  # Se usa persistance volumen claim  
   volumen:
     name: web-claim0
     path: /app/logs
+    storage: 50Mi # Minimo para iniciar
   resources:
-    mincpu: 100m #100m # Solicita un 10% al iniciar
+    mincpu: 100m # Solicita un 10% al iniciar
   limits:
     maxcpu: 1
     maxram: 500Mi
@@ -45,7 +47,8 @@ posgre:
   # Volumen donde se guardan los logs de la web  
   volumen:
     name: db-data
-    path: /var/lib/postgresql/data   
+    path: /var/lib/postgresql/data
+    storage: 100Mi # Minimo para iniciar   
 ###############################################################
 # Adminer
 adminer:
@@ -68,5 +71,7 @@ secret:
     psqpass: prueba1   # DB_PASS=prueba1     
   docker:
     name: docker-secret   
+###############################################################
+   
 
     
