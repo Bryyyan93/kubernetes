@@ -78,7 +78,7 @@ Para realizar las pruebas se ha hecho de la siguiente manera:
   
 - Comporbar que esta habilitado el servicio de metrics `minikube addons enable metrics-server`   
 - Comprobar que se esta ejecutando: `kubectl get hpa -w`   
-   ![Verificación del escalado de la aplicación](./)   
+   ![Verificación del escalado de la aplicación](./img/hpa_check.png)   
 - Aumentar la carga de trabajo para verificar el autoescalado `kubectl run load-generator-manual --image=busybox --command -- sh -c 'while true; do wget -q -O- http://nginx-hpa   >dev/null 2>&1; done'`  
 ## Exponer la Aplicación al exterior  
 Para poder exponer la aplicación al exterior se usará manifiesto del tipo `Ingress` el cual llamamos `web-ingress.yaml`.  
