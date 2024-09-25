@@ -8,7 +8,7 @@ spec:
   type: ClusterIP
   ports:
     - protocol: {{ .Values.protocol }}
-      port: {{ .Values.web.service.tarjetport }} # Puerto expuesto al que apunta el Ingress
+      port: {{ .Values.web.service.targetport }} # Puerto expuesto al que apunta el Ingress
       targetPort: {{ .Values.web.deploy.port }} # Puerto interno del contenedor
   selector:
     app.k8s.io: {{ .Values.web.deploy.name }}

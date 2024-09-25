@@ -23,7 +23,7 @@ web:
     port: 5000 # Puerto interno del contenedor
   service:
     name: web-srv
-    tarjetport: 80 # Puerto expuesto al que apunta el Ingress
+    targetport: 80 # Puerto expuesto al que apunta el Ingress
   # Volumen donde se guardan los logs de la web  
   volumen:
     name: web-claim0
@@ -41,7 +41,7 @@ posgre:
     port: 5432 # Puerto interno del contenedor
   service:
     name: db
-    tarjetport: 5432 # Puerto expuesto al que apunta el Ingress
+    targetport: 5432 # Puerto expuesto al que apunta el Ingress
   # Volumen donde se guardan los logs de la web  
   volumen:
     name: db-data
@@ -54,7 +54,7 @@ adminer:
     port: 8080 # Puerto interno del contenedor
   service:
     name: adminer-srv
-    tarjetport: 50 # Puerto expuesto al que apunta el Ingress
+    targetport: 50 # Puerto expuesto al que apunta el Ingress
 ###############################################################
 # Secrets
 secret: 

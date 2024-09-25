@@ -7,7 +7,7 @@ metadata:
 spec:
   ports:
     - protocol: {{ .Values.protocol }}
-      port: {{ .Values.adminer.service.tarjetport }}
+      port: {{ .Values.adminer.service.targetport }}
       targetPort: {{ .Values.adminer.deploy.port }}
   selector:
     app.k8s.io: {{ .Values.adminer.deploy.name }}
