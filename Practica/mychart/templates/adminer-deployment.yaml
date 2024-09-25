@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.k8s.io: {{ .Values.adminer.deploy.name }}
+  name: {{ .Values.adminer.deploy.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.k8s.io: {{ .Values.adminer.deploy.name }}
+  template:
+    metadata:
+      labels:
+        app.k8s.io: {{ .Values.adminer.deploy.name }}
+    spec:
+      containers:
+        - image: "{{ .Values.image.adminer }}:{{ .Values.image.admitag }}"
+          name: {{ .Values.adminer.service.name }}
+          ports:
+            - containerPort: {{ .Values.adminer.deploy.port }}
+              protocol: {{ .Values.protocol }}
+      restartPolicy: Always
