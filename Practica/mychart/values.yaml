@@ -60,12 +60,12 @@ adminer:
 secret: 
   cred:
     name: db-cred
-    psq-db: test1       # POSTGRES_DB=test1 
-    psq-host: db        # DB_HOST=db
-    psq-port: 5432      # DB_PORT=5432  
-    psq-dbname: test1   # DB_NAME=test1     
-    psq-user: prueba1   # DB_USER=prueba1     
-    psq-pass: prueba1   # DB_PASS=prueba1     
+    psqdb: test1       # POSTGRES_DB=test1 
+    psqhost: db        # DB_HOST=db
+    psqport: 5432      # DB_PORT=5432  
+    psqdbname: test1   # DB_NAME=test1     
+    psquser: prueba1   # DB_USER=prueba1     
+    psqpass: prueba1   # DB_PASS=prueba1     
   docker:
     name: docker-secret   
 

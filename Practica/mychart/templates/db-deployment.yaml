@@ -27,32 +27,32 @@ spec:
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
-                key: psq-host
+                key: psqhost
                 name: db-cred
           - name: DB_NAME
             valueFrom:
               secretKeyRef:
-                key: psq-dbname
+                key: psqdbname
                 name: env-test1-env
           - name: DB_PASS
             valueFrom:
               secretKeyRef:
-                key: psq-pass
+                key: psqpass
                 name: db-cred
           - name: DB_PORT
             valueFrom:
               secretKeyRef:
-                key: psq-port
+                key: psqport
                 name: env-test1-env
           - name: DB_USER
             valueFrom:
               secretKeyRef:
-                key: psq-user
+                key: psquser
                 name: env-test1-env
           - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:
-                key: psq-db
+                key: psqdb
                 name: db-cred
         # Montar un volumen persistente      
         volumeMounts:
