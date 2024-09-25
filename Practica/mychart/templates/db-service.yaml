@@ -6,6 +6,7 @@ metadata:
   name: {{ .Values.posgre.deploy.name }}
 spec:
   ports:
+    - protocol: {{ .Values.protocol }}
       port: {{ .Values.posgre.service.tarjetport }}
       targetPort: {{ .Values.posgre.service.tarjetport }}
   selector:
