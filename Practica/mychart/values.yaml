@@ -80,6 +80,13 @@ Load:
     maxrep: 5 # Numero maximo de replicas
     minrep: 2 # Numero minimo de replicas
   resource:
-    avrcpu: 20 # Modificar el porcentaje de utilizacion de CPU    
+    avrcpu: 20 # Modificar el porcentaje de utilizacion de CPU
+###############################################################
+# Ingress
+Ingress:
+  name: web-igrss
+  host: 192-168-49-2.nip.io # Se usa la IP de minikube tunel
+
+
 
     

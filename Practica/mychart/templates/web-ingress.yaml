@@ -3,25 +3,25 @@ kind: Ingress
 metadata:
   #labels:
   #  app.k8s.io: web
-  name: web-igrss
-  namespace: default
+  name: {{ .Values.Ingress.name }}
+  #namespace: default
 spec:
   rules:
-  - host: 192-168-49-2.nip.io # Se usa la IP de minikube tunel
+  - host: {{ .Values.Ingress.host }} # Se usa la IP de minikube tunel
     http:
       paths:
       - path: /notes
         pathType: Prefix
         backend:
           service:
-            name: web-srv
+            name: {{ .Values.web.service.name }} # web-srv
             port:
-              number: 80
+              number: {{ .Values.web.service.targetport }} #80
       - path: /admin
         pathType: Prefix
         backend:
           service:
-            name: adminer-srv
+            name: {{ .Values.adminer.service.name }} # adminer-srv
             port:
-              number: 50       
+              number: {{ .Values.adminer.service.targetport }} #50       
 
