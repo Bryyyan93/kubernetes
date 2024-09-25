@@ -5,7 +5,7 @@ metadata:
     app.k8s.io: {{ .Values.adminer.deploy.name }}
   name: {{ .Values.adminer.deploy.name }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       app.k8s.io: {{ .Values.adminer.deploy.name }}
