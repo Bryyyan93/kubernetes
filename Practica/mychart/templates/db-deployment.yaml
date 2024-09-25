@@ -33,7 +33,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: psqdbname
-                name: env-test1-env
+                name: db-cred
           - name: DB_PASS
             valueFrom:
               secretKeyRef:
@@ -43,12 +43,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: psqport
-                name: env-test1-env
+                name: db-cred
           - name: DB_USER
             valueFrom:
               secretKeyRef:
                 key: psquser
-                name: env-test1-env
+                name: db-cred
           - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:
