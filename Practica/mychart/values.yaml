@@ -1,6 +1,6 @@
 ###############################################################
 # Varaibles globales
-replicas: 1
+replicas: "1"
 protocol: TCP
 strategy: Recreate # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos 
 ###############################################################
@@ -20,10 +20,10 @@ image:
 web:
   deploy:
     name: web
-    port: 5000 # Puerto interno del contenedor
+    port: "5000" # Puerto interno del contenedor
   service:
     name: web-srv
-    tarjetport: 80 # Puerto expuesto al que apunta el Ingress
+    tarjetport: "80" # Puerto expuesto al que apunta el Ingress
   # Volumen donde se guardan los logs de la web  
   volumen:
     name: web-claim0
@@ -31,17 +31,17 @@ web:
   resources:
     mincpu: 100m #100m # Solicita un 10% al iniciar
   limits:
-    maxcpu: 1
+    maxcpu: "1"
     maxram: 500Mi
 ###############################################################
 # Base de datos    
 posgre:
   deploy:
     name: db
-    port: 5432 # Puerto interno del contenedor
+    port: "5432" # Puerto interno del contenedor
   service:
     name: db
-    tarjetport: 5432 # Puerto expuesto al que apunta el Ingress
+    tarjetport: "5432" # Puerto expuesto al que apunta el Ingress
   # Volumen donde se guardan los logs de la web  
   volumen:
     name: db-data
@@ -51,10 +51,10 @@ posgre:
 adminer:
   deploy:
     name: adminer
-    port: 8080 # Puerto interno del contenedor
+    port: "8080" # Puerto interno del contenedor
   service:
     name: adminer-srv
-    tarjetport: 50 # Puerto expuesto al que apunta el Ingress
+    tarjetport: "50" # Puerto expuesto al que apunta el Ingress
 ###############################################################
 # Secrets
 secret: 
@@ -62,7 +62,7 @@ secret:
     name: db-cred
     psqdb: test1       # POSTGRES_DB=test1 
     psqhost: db        # DB_HOST=db
-    psqport: 5432      # DB_PORT=5432  
+    psqport: "5432"      # DB_PORT=5432  
     psqdbname: test1   # DB_NAME=test1     
     psquser: prueba1   # DB_USER=prueba1     
     psqpass: prueba1   # DB_PASS=prueba1     
