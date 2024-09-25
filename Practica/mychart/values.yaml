@@ -1,19 +1,38 @@
 # Valores de web
 # Varaibles globales
 replicas: 1
+protocol: TCP
+
 image:
-  image:
-    repo: bryyyan/practica_contendores
-    webtag: appweb-k8s-v3
-    dbtag: appdata-k8s-v2
-    policy: IfNotPresent
+  repo: bryyyan/practica_contendores
+  webtag: appweb-k8s-v3
+  dbtag: appdata-k8s-v2
+  policy: IfNotPresent
+  pullhub: docker-secret
 
 # Variables específicas
 web:
-  port: 5000 
+  deploy:
+    name: web
+    port: 5000 
+  service:
+    name: web-srv
+  volumen:
+    name: web-claim0
+    path: /app/logs
+  resources:
+    mincpu: 100m
+  limits:
+    maxcpu: 1
+    maxram: 500Mi
+  Liveness:
+
+
+
 
 secret: 
-  db:
+  cred:
+    name: db-cred
     psq-db: test1       # POSTGRES_DB=test1 
     psq-host: db        # DB_HOST=db
     psq-port: 5432      # DB_PORT=5432  
