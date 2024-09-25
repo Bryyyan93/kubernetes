@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    app.k8s.io: {{ .Values.web.volumen.name }}
+  name: {{ .Values.web.volumen.name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.web.volumen.storage }}

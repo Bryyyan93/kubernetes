@@ -1,0 +1,18 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: app-hpa
+spec:
+  maxReplicas: 5 #numero maximo de replicas
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 20 # Modificar el porcentaje de utilizacion de CPU
+        type: Utilization
+    type: Resource
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: web 
