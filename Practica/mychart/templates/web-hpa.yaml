@@ -1,18 +1,19 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: app-hpa
+  name: {{ .Values.Load.name }}
 spec:
-  maxReplicas: 5 #numero maximo de replicas
+  maxReplicas: {{ .Values.Load.spec.maxrep }} #numero maximo de replicas
   metrics:
   - resource:
       name: cpu
       target:
-        averageUtilization: 20 # Modificar el porcentaje de utilizacion de CPU
+        averageUtilization: {{ .Values.Load.resource.avrcpu }} # Modificar el porcentaje de utilizacion de CPU
         type: Utilization
     type: Resource
-  minReplicas: 2
+  minReplicas: {{ .Values.Load.spec.minrep }}
+  # Apunta al deployment de la web
   scaleTargetRef:
-    apiVersion: apps/v1
+    apiVersion: {{ .Values.web.deploy.apiver }} #apps/v1
     kind: Deployment
-    name: web 
+    name: {{ .Values.web.deploy.name }} 
