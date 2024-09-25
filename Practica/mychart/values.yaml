@@ -14,9 +14,10 @@ image:
 web:
   deploy:
     name: web
-    port: 5000 
+    port: 5000 # Puerto interno del contenedor
   service:
     name: web-srv
+    tarjetport: 80 # Puerto expuesto al que apunta el Ingress
   volumen:
     name: web-claim0
     path: /app/logs

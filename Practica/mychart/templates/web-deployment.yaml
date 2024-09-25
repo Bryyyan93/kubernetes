@@ -20,8 +20,8 @@ spec:
       - name: {{ .Values.web.service.name }} # Nombre del servicio
         image: "{{ .Values.image.repo }}:{{ .Values.image.webtag }}"
         ports: 
-          - containerPort: "{{ .Values.web.deploy.port }}"
-            protocol: "{{ .Values.protocol }}"
+          - containerPort: {{ .Values.web.deploy.port }}
+            protocol: {{ .Values.protocol }}
         # Comando que espera a los la DDBB este lista    
         command:
           - sh
