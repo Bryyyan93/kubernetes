@@ -1,27 +1,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  #labels:
-  #  app.k8s.io: web
   name: {{ .Values.Ingress.name }}
-  #namespace: default
 spec:
   rules:
-  - host: {{ .Values.Ingress.host }} # Se usa la IP de minikube tunel
+  - host: {{ .Values.Ingress.host }} 
     http:
       paths:
       - path: /notes
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.web.service.name }} # web-srv
+            name: {{ .Values.web.service.name }} 
             port:
-              number: {{ .Values.web.service.targetport }} #80
+              number: {{ .Values.web.service.targetport }} 
       - path: /admin
         pathType: Prefix
         backend:
           service:
-            name: {{ .Values.adminer.service.name }} # adminer-srv
+            name: {{ .Values.adminer.service.name }} 
             port:
-              number: {{ .Values.adminer.service.targetport }} #50       
+              number: {{ .Values.adminer.service.targetport }}      
 

@@ -127,5 +127,91 @@ Para comprobar su funcionamiento, se puede ver el los logs, ejecutando el siguie
 Obteniedo la siguiente respuesta:  
 <p align="center">
     <img src="./img/verificar_liveness_readiness.png" alt="Respuesta en log de liveness y readiness" width="700"/>
+</p> 
+
+### Escalar la Aplicación de manera automática  
+Para realizar la escabilidad se ha usado el manifiesto de `HorizontalPodAutoscaler`. Este manifiesto realizará un escalado horizontal.  
+- **web-hpa.yaml**: Configuración del nñumero de replicas ademas de la limitación de la CPU.  
+```  
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.Load.name }}
+spec:
+  maxReplicas: {{ .Values.Load.spec.maxrep }} #numero maximo de replicas
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: {{ .Values.Load.resource.avrcpu }} # Modificar el porcentaje de utilizacion de CPU
+        type: Utilization
+    type: Resource
+  minReplicas: {{ .Values.Load.spec.minrep }}
+  # Apunta al deployment de la web
+  scaleTargetRef:
+    apiVersion: {{ .Values.web.deploy.apiver }} #apps/v1
+    kind: Deployment
+    name: {{ .Values.web.deploy.name }} 
+```  
+Para realizar las pruebas se ha hecho de la siguiente manera:    
+- Comprobar que se esta ejecutando: `kubectl get hpa -w`   
+<p align="center">
+    <img src="./img/hpa_check.png" alt="Verificación del escalado de la aplicación" width="700"/>
 </p>  
+- Aumentar la carga de trabajo para verificar el autoescalado:   
+
+kubectl run load-generator-manual --image=busybox --command -- sh -c 'while true; do wget -q -O- http://nginx-hpa   >dev/null 2>&1; done'
+
+## Exponer la Aplicación al exterior  
+Para poder exponer la aplicación al exterior se usará manifiesto del tipo `Ingress` el cual llamamos `web-ingress.yaml`.  
+La configuración es la siguiente:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.Ingress.name }}
+spec:
+  rules:
+  - host: {{ .Values.Ingress.host }} 
+    http:
+      paths:
+      - path: /notes
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.web.service.name }} 
+            port:
+              number: {{ .Values.web.service.targetport }} 
+      - path: /admin
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.adminer.service.name }} 
+            port:
+              number: {{ .Values.adminer.service.targetport }}    
+```
+De esta manera se expone la aplicación al exterior, debido al funcionamiento de la aplicación se puede usar los siguientes comandos:  
+- Para añadir contenido a la aplicacion Flask se usará la siguiente petición:  
+  ```   
+  curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://192-168-49-2.nip.io:5000/notes  
+  ```  
+- Para poder acceder a la aplicación se deberá hacer de la siguiente manera:  
+    
+  * La aplicación principal:  
+    `http://192-168-49-2.nip.io/notes`  
+
+    <p align="center">
+        <img src="./img/web_app.png" alt="Aplicación web" width="500"/>
+    </p>
+
+
+  * Redirección a la monitorización de DDBB      
+    `http://192-168-49-2.nip.io/admin`  
+
+    <p align="center">
+        <img src="./img/adminer_app.png" alt="Aplicación de Adminer" width="500"/>
+    </p>
+
+  * Para añadir notas:  
+    `curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://192-168-49-2.nip.io/notes`  
   
