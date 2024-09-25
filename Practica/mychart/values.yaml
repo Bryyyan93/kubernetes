@@ -2,15 +2,16 @@
 # Varaibles globales
 replicas: 1
 protocol: TCP
+strategy: Recreate # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos 
 
+# Variables específicas
 image:
   repo: bryyyan/practica_contendores
   webtag: appweb-k8s-v3
   dbtag: appdata-k8s-v2
   policy: IfNotPresent
   pullhub: docker-secret
-
-# Variables específicas
+# Variables para el deployment y servicio web
 web:
   deploy:
     name: web
@@ -18,15 +19,28 @@ web:
   service:
     name: web-srv
     tarjetport: 80 # Puerto expuesto al que apunta el Ingress
+  # Volumen donde se guardan los logs de la web  
   volumen:
     name: web-claim0
     path: /app/logs
   resources:
-    mincpu: 100m
+    mincpu: 100m #100m # Solicita un 10% al iniciar
   limits:
     maxcpu: 1
     maxram: 500Mi
-  Liveness:
+###############################################################
+# Base de datos    
+posgre:
+  deploy:
+    name: db
+    port: 5432 # Puerto interno del contenedor
+  service:
+    name: db
+    tarjetport: 5432 # Puerto expuesto al que apunta el Ingress
+  # Volumen donde se guardan los logs de la web  
+  volumen:
+    name: db-data
+    path: /var/lib/postgresql/data   
 
 
 

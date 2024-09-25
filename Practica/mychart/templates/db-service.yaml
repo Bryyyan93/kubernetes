@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.k8s.io: {{ .Values.posgre.deploy.name }}
+  name: {{ .Values.posgre.deploy.name }}
+spec:
+  ports:
+      port: {{ .Values.posgre.service.tarjetport }}
+      targetPort: {{ .Values.posgre.service.tarjetport }}
+  selector:
+    app.k8s.io: {{ .Values.posgre.deploy.name }}

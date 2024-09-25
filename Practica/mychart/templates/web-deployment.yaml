@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app.k8s.io: {{ .Values.web.deploy.name }}
   strategy:
-    type: Recreate # Poner en variable 
+    type: {{ .Values.strategy }} 
   template:
     metadata:
       labels:
