@@ -64,12 +64,6 @@ adminer:
 secret: 
   cred:
     name: db-cred
-    psqdb: ENC[AES256_GCM,data:37k31lg=,iv:fuyYj9n65J7rigRZF3PWL+HabHxqibm4tSZvczueYJ4=,tag:HbyTxDFDb9LrbHdEO/3Giw==,type:str]
-    psqhost: ENC[AES256_GCM,data:4Zo=,iv:3ALAA1cokTxI0noAl5pMROQ1sun3KBd9FiK/JTokj/s=,tag:0c2ThgWatEMd94V95vYWEw==,type:str]
-    psqport: ENC[AES256_GCM,data:/sKx2g==,iv:5TYEepCSVUR2ikMAQhb6yHlfhRjnxYci2qMmvvZYpjU=,tag:0fB9nd8l2QvOB72c+tzU2g==,type:str]
-    psqdbname: ENC[AES256_GCM,data:o2uUecU=,iv:3wuND1M5tjAYTJpXc3zLJ4Ot47juaARHwu8yqB0yrq8=,tag:26EgPTh5dkMILld9Iabx4A==,type:str]
-    psquser: ENC[AES256_GCM,data:RIestx4igw==,iv:Y8m8siUkik4D0GiFD8UD+DCCCLjoEaqIb1SIOiWxQDE=,tag:QMcf7cgzH39vdIbUWbYD1w==,type:str]
-    psqpass: ENC[AES256_GCM,data:5ENJ4fMpHQ==,iv:GR3BY4QSPe8gNYfTj3gVIILBSf7g2KyW0nr5bzHN1Ts=,tag:2g9Pp/AYcWcwJ8Uu+cYaMw==,type:str]
   docker:
     name: docker-secret   
 ###############################################################
