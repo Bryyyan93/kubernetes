@@ -35,6 +35,8 @@ mychart/
 ├── Chart.yaml
 ├── README.md
 ├── values.yaml
+├── charts/
+├── img/
 └── templates/
     ├── adminer-deployment.yaml
     ├── adminer-service.yaml
@@ -45,9 +47,16 @@ mychart/
     ├── hub-secret.yaml
     ├── web-claim0-persistentvolumeclaim.yaml
     ├── web-deployment.yaml
+    ├── web-hpa.yaml
+    ├── web-ingress.yaml
     └── web-service.yaml
-
 ```
+Para desplegar Helm se hará uso del siguiente comando: `helm install [nombre_despliegue] [directorio chart]`
+Obteniendo:  
+<p align="center">
+    <img src="./img/despliegue_helm.png" alt="Desplegar Helm" width="500"/>
+</p>  
+  
 ### Configurar la Persistencia de Datos
 Para asegurar los datos de manera persitente se ha usado el manifiesto`persistentvolumeclaim`.  
 - **db-data-persistentvolumeclaim**: Asegura los datos almacenados en la base de datos desde `db-deployment.yaml`.  
