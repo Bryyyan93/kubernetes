@@ -61,9 +61,10 @@ adminer:
     targetport: 50 # Puerto expuesto al que apunta el Ingress
 ###############################################################
 # Secrets
+# psqpass: {{ .Values.secret.cred.psqpass | b64enc }}
 secret: 
   cred:
-    name: db-cred
+    name: db-cred       
   docker:
     name: docker-secret   
 ###############################################################
