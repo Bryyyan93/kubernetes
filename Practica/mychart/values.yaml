@@ -61,16 +61,16 @@ adminer:
     targetport: 50 # Puerto expuesto al que apunta el Ingress
 ###############################################################
 # Secrets
-# psqpass: {{ .Values.secret.cred.psqpass | b64enc }}
+# --set secret.cred.psquser=prueba1 --set secret.cred.psqpass=prueba1
 secret: 
   cred:
     name: db-cred
-    psqdb: test1       # POSTGRES_DB=test1 
-    psqhost: db        # DB_HOST=db
-    psqport: "5432"      # DB_PORT=5432  
-    psqdbname: ""   # DB_NAME=test1     
-    psquser: ""   # DB_USER=prueba1     
-    psqpass: ""   # DB_PASS=prueba1       
+    psqdb: test1        # POSTGRES_DB 
+    psqhost: db         # DB_HOST
+    psqport: "5432"     # DB_PORT 
+    psqdbname: test1    # DB_NAME     
+    psquser: ""         # DB_USER     
+    psqpass: ""         # DB_PASS       
   docker:
     name: docker-secret   
 ###############################################################
