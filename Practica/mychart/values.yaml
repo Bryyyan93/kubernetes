@@ -68,9 +68,9 @@ secret:
     psqdb: test1       # POSTGRES_DB=test1 
     psqhost: db        # DB_HOST=db
     psqport: "5432"      # DB_PORT=5432  
-    psqdbname: test1   # DB_NAME=test1     
-    psquser: prueba1   # DB_USER=prueba1     
-    psqpass: prueba1   # DB_PASS=prueba1       
+    psqdbname: ""   # DB_NAME=test1     
+    psquser: ""   # DB_USER=prueba1     
+    psqpass: ""   # DB_PASS=prueba1       
   docker:
     name: docker-secret   
 ###############################################################
