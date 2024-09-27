@@ -17,7 +17,7 @@ spec:
         app.k8s.io: {{ .Values.posgre.deploy.name }}
     spec:
       containers:
-      - name: {{ .Values.posgre.deploy.name }}
+      - name: {{ .Values.posgre.service.name }}
         image: "{{ .Values.image.repo }}:{{ .Values.image.dbtag }}"
         ports:
         - containerPort: {{ .Values.posgre.deploy.port }}

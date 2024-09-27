@@ -7,6 +7,6 @@ description: Un chart de Helm par desplegar una aplicacion en kubernetes
 type: application
 # La versión del chart
 # Esta numero se debería incrementar cada vez que se haga cambios
-version: 0.2.0
+version: 0.2.2
 # versión de la aplicación que se está desplegando
 appVersion: "1.16.0"

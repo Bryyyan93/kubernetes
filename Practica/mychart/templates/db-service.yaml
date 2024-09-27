@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app.k8s.io: {{ .Values.posgre.deploy.name }}
-  name: {{ .Values.posgre.deploy.name }}
+  name: {{ .Values.posgre.service.name }}
 spec:
   ports:
     - protocol: {{ .Values.protocol }}
