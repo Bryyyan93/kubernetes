@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:   
@@ -96,7 +97,3 @@ spec:
         - name: {{ .Values.web.volumen.name }}
           persistentVolumeClaim:
             claimName: {{ .Values.web.volumen.name }}                
-
-
-
-

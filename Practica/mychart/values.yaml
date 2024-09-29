@@ -2,7 +2,7 @@
 # Varaibles globales
 replicas: 1
 protocol: TCP
-strategy: Recreate # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos 
+#strategy: Recreate # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos 
 ###############################################################
 # Imagenes
 # Variables específicas
@@ -43,7 +43,7 @@ posgre:
     name: db
     port: 5432 # Puerto interno del contenedor
   service:
-    name: db
+    name: db-srv
     targetport: 5432 # Puerto expuesto al que apunta el Ingress
   # Volumen donde se guardan los logs de la web  
   volumen:
