@@ -9,23 +9,9 @@ Antes de realizar el despliegue en Kubernetes y Helm hay que tener el cuenta que
 - **Kubectl**: Para instalar Kubectl, podemos ir a la pagina oficial y proceder con la instalación como se indica: `https://kubernetes.io/es/docs/tasks/tools/install-kubectl-linux/`
 
 Teniendo en cuenta lo que se pedirá para el desarrollo del proyecto, se deberá instalar los siguientes addons de minikube:  
-- HorizontalPodAutoscaler (HPA)  
-```
-Instalar Metrics Server:
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
-Verifica que el Metrics Server esté funcionando:
-kubectl get apiservices | grep metrics
-```  
-- Ingress  
-```
-Instalar NGINX Ingress Controller
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
-Verificar que este funcionado:
-kubectl get pods -n ingress-nginx
-Habilitar el addon de minikube:
-minikube addons enable ingress
-```  
-Quedaría ejecutar eñ tunel de minikube y acceder al `LoadBalancer`, con el siguiente comando: `minikube tunnel`
+- HorizontalPodAutoscaler (HPA) `minikube addons enable metrics-server`  
+- Ingress: `minikube addons enable ingress`  
+- Para las pruebas con ingress se deberá habilita la opción del tunel `minikube tunel`
 ## Objetivos específicos
 ### Crear un chart de Helm 
 Para realizar el despliegue se ha usado la estructura basica de Helm, que se describe en el siguiente esquema:
@@ -41,7 +27,7 @@ mychart/
     ├── adminer-deployment.yaml
     ├── adminer-service.yaml
     ├── db-data-persistentvolumeclaim.yaml
-    ├── db-deployment.yaml
+    ├── db-statefulset.yaml
     ├── db-secret.yaml
     ├── db-service.yaml
     ├── hub-secret.yaml
@@ -55,13 +41,13 @@ Para desplegar Helm se hará uso del siguiente comando: `helm install [nombre_de
 Obteniendo:  
 <p align="center">
     <img src="./img/despliegue_helm.png" alt="Desplegar Helm" width="500"/>
-</p>  
+</p>
   
 ### Configurar la Persistencia de Datos
 Para asegurar los datos de manera persitente se ha usado el manifiesto`persistentvolumeclaim`.  
-- **db-data-persistentvolumeclaim**: Asegura los datos almacenados en la base de datos desde `db-deployment.yaml`.  
+- **db-data-persistentvolumeclaim**: Asegura los datos almacenados en la base de datos desde `db-staefulset.yaml`.  
 - **web-claim0-persistentvolumeclaim**: Asegura los datos almacenados para los logs en  `web-deployment.yaml`.  
-La implementacón es similar en ambos casos, aunque la diferenca esta en la llamada. Se usó esta base de código: 
+Para la base de datos se usa el manifiesto de `statefulset.yaml` puesto que están diseñados específicamente para aplicaciones con estado como bases de datos. Asegura que cada pod tenga un identificador único y un volumen persistente asociado.  
 ```
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -75,7 +61,19 @@ spec:
   resources:
     requests:
       storage: {{ .Values.posgre.volumen.storage }}
+```  
+Para gestionar este manifiesto, se debe modificar el manifiesto de `db-staefulset.yaml` y añadiendo `volumeClaimTemplates`, puesto que este apartado define una plantilla para crear automáticamente PersistentVolumeClaims (PVC) para cada pod.  
 ```
+volumeClaimTemplates:          
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: {{ .Values.posgre.volumen.storage }}
+```  
+Finalmente, se modifica el servicio `db-service.yaml` hay que tener en cuenta que no es `Cluster-IP` asi que se denerá declarar el tipo, para este caso: `clusterIP: None`.  
 ## Gestionar Configuración Sensible  
 Para gestionar la configuración sencible se ha usado el manifiesto de `secret`.  
 - **db-secret.yaml**: Almacenan las variables de configuración para la base de datos, se usarán en los deployments de `db-deployment.yaml` y `web-deployment.yaml`.  
@@ -199,7 +197,35 @@ spec:
             port:
               number: {{ .Values.adminer.service.targetport }}    
 ```
-De esta manera se expone la aplicación al exterior, debido al funcionamiento de la aplicación se puede usar los siguientes comandos:  
+De esta manera se expone la aplicación al exterior del clúster.
+## Acceso y comprobaciones finales.
+Una vez se ha comprobado el correcto funcionamiento de las distintas partes, continuamos con las comprobaciones finales de l conjunto. Para ello se deberá:
+- Comprobar que los addons antes mencionados están habilitado, para ello se ejecutará el comando `minikube addons list`  
+<p align="center">
+    <img src="./img/addons_list.png" alt="Minikube list" width="700"/>
+</p>
+- Habilitar el tunel de minikube: `minikube tunel`.  
+- Finalmente, para evitar posible configuraciones previas, se crea un nuevo namespace:  
+`kubectl create namespace maintest`.  
+Una vez se ha comptabado que lo que necesitamos esta habilitado, continuamos con la ejecución del chart de Helm.
+- Para desplegar Helm ejecutamos el siguiente comando:  
+`helm install myapp ./mychart -n maintest --set secret.cred.psquser=prueba1 --set secret.cred.psqpass=prueba1`.  
+ 
+<p align="center">
+    <img src="./img/helm_final.png" alt="Despliegue final" width="700"/>
+</p> 
+Para revisar que el despliegue se ejecute correctamente debemos ejecutar los siguiente comandos para comprobar que no exiten errores:
+```
+kubectl -n maintest get pods  
+kubectl -n maintest get services  
+kubectl -n maintest get persistentvolumeclaims   
+kubectl -n maintest get horizontalpodautoscalers.autoscaling  
+```  
+Otro modo mas visual de monitorear los procesos sería habilitando el addons de `dashboard`: `minikube addons dashboard`.   
+<p align="center">
+    <img src="./img/dashboard.png" alt="Minikube dashboard" width="700"/>
+</p>
+
 - Para añadir contenido a la aplicacion Flask se usará la siguiente petición:  
   ```   
   curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://192-168-49-2.nip.io:5000/notes  
@@ -220,7 +246,5 @@ De esta manera se expone la aplicación al exterior, debido al funcionamiento de
     <p align="center">
         <img src="./img/adminer_app.png" alt="Aplicación de Adminer" width="500"/>
     </p>
-
-  * Para añadir notas:  
-    `curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://192-168-49-2.nip.io/notes`  
+ 
   
