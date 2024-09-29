@@ -1,5 +1,5 @@
 
-apiVersion: apps/v1
+apiVersion: {{ .Values.web.deploy.apiver }} 
 kind: Deployment
 metadata:   
   labels: 

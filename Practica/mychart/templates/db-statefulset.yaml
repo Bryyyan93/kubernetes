@@ -5,7 +5,7 @@ metadata:
     app.k8s.io: {{ .Values.posgre.deploy.name }}
   name: {{ .Values.posgre.deploy.name }}
 spec:
-  serviceName: {{ .Values.posgre.service.name }}  # Añadido
+  serviceName: {{ .Values.posgre.deploy.name }} 
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
@@ -16,7 +16,7 @@ spec:
         app.k8s.io: {{ .Values.posgre.deploy.name }}
     spec:
       containers:
-      - name: {{ .Values.posgre.service.name }}
+      - name: {{ .Values.posgre.deploy.name }}
         image: "{{ .Values.image.repo }}:{{ .Values.image.dbtag }}"
         ports:
         - containerPort: {{ .Values.posgre.deploy.port }}

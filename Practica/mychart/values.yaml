@@ -32,9 +32,9 @@ web:
     path: /app/logs
     storage: 50Mi # Minimo para iniciar
   resources:
-    mincpu: 100m # Solicita un 10% al iniciar
+    mincpu: 5m # Solicita un 10% al iniciar
   limits:
-    maxcpu: 1
+    maxcpu: 500m
     maxram: 500Mi
 ###############################################################
 # Base de datos    
@@ -43,7 +43,7 @@ posgre:
     name: db
     port: 5432 # Puerto interno del contenedor
   service:
-    name: db-srv
+    name: db
     targetport: 5432 # Puerto expuesto al que apunta el Ingress
   # Volumen donde se guardan los logs de la web  
   volumen:
