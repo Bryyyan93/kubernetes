@@ -1,4 +1,17 @@
 # Práctica: Despliegue de una aplicación en Kubernetes
+En esta práctica se ha desarrollado los suguientes puntos:
+* [Objetivo General](#objetivo-general)
+* [Pasos previos](#pasos-previos)
+* [Objetivos específicos](#objetivos-específicos)
+* [Crear un chart de Helm](#crear-un-chart-de-helm)
+* [Configurar la Persistencia de Datos](#configurar-la-persistencia-de-datos)
+* [Gestionar Configuración Sensible](#gestionar-configuración-sensible)
+* [Escalar la Aplicación de manera automática](#escalar-la-aplicación-de-manera-automática)
+* [Exponer la Aplicación al exterior](#exponer-la-aplicación-al-exterior)
+* [Garantizar la resiliencia de la Aplicación](#garantizar-la-resiliencia-de-la-aplicación)
+* [Acceso y comprobaciones finales](#acceso-y-comprobaciones-finales)
+* [Mejoras futuras](#mejoras-futuras)
+
 ## Objetivo General
 Desplegar una aplicación con una base de datos en Kubernetes utilizando Helm, asegurando que la aplicación sea accesible, escalable y que los datos se almacenen de forma persistente. La aplicación puede ser pública (e.g. Wordpress) o cualquier otra aplicación que se conecte a una base de datos (e.g. otra aplicación que hayáis desarrollado en otro curso de KeepCoding).  
 
@@ -74,7 +87,7 @@ volumeClaimTemplates:
           storage: {{ .Values.posgre.volumen.storage }}
 ```  
 Finalmente, se modifica el servicio `db-service.yaml` hay que tener en cuenta que no es `Cluster-IP` asi que se denerá declarar el tipo, para este caso: `clusterIP: None`.  
-## Gestionar Configuración Sensible  
+### Gestionar Configuración Sensible  
 Para gestionar la configuración sencible se ha usado el manifiesto de `secret`.  
 - **db-secret.yaml**: Almacenan las variables de configuración para la base de datos, se usarán en los deployments de `db-deployment.yaml` y `web-deployment.yaml`.  
 - **hub-secret.yaml**: Aalmacenan las variables de configuración para descargar las imagenes del repositorio privado de Docker Hub, que se usarán en los deployments de   `db-deployment.yaml` y `web-deployment.yaml`.  
@@ -138,6 +151,7 @@ Obteniedo la siguiente respuesta:
 
 ### Escalar la Aplicación de manera automática  
 Para realizar la escabilidad se ha usado el manifiesto de `HorizontalPodAutoscaler`. Este manifiesto realizará un escalado horizontal.  
+En este apartado se incluye el número minimo de replicas (2) para asegurar que la aplicación siempre esta disponible.  
 - **web-hpa.yaml**: Configuración del nñumero de replicas ademas de la limitación de la CPU.  
 ```  
 apiVersion: autoscaling/v2
@@ -169,7 +183,7 @@ Para realizar las pruebas se ha hecho de la siguiente manera:
 
 kubectl run load-generator-manual --image=busybox --command -- sh -c 'while true; do wget -q -O- http://nginx-hpa   >dev/null 2>&1; done'
 
-## Exponer la Aplicación al exterior  
+### Exponer la Aplicación al exterior  
 Para poder exponer la aplicación al exterior se usará manifiesto del tipo `Ingress` el cual llamamos `web-ingress.yaml`.  
 La configuración es la siguiente:
 ```
@@ -204,23 +218,26 @@ Una vez se ha comprobado el correcto funcionamiento de las distintas partes, con
 <p align="center">
     <img src="./img/addons_list.png" alt="Minikube list" width="700"/>
 </p>
-- Habilitar el tunel de minikube: `minikube tunel`.  
+
+- Habilitar el tunel de minikube: `minikube tunel`.    
 - Finalmente, para evitar posible configuraciones previas, se crea un nuevo namespace:  
 `kubectl create namespace maintest`.  
-Una vez se ha comptabado que lo que necesitamos esta habilitado, continuamos con la ejecución del chart de Helm.
+
+Una vez se ha comptabado que lo que necesitamos esta habilitado, continuamos con la ejecución del chart de Helm.  
 - Para desplegar Helm ejecutamos el siguiente comando:  
 `helm install myapp ./mychart -n maintest --set secret.cred.psquser=prueba1 --set secret.cred.psqpass=prueba1`.  
- 
+
 <p align="center">
     <img src="./img/helm_final.png" alt="Despliegue final" width="700"/>
 </p> 
+
 Para revisar que el despliegue se ejecute correctamente debemos ejecutar los siguiente comandos para comprobar que no exiten errores:
 ```
 kubectl -n maintest get pods  
 kubectl -n maintest get services  
 kubectl -n maintest get persistentvolumeclaims   
 kubectl -n maintest get horizontalpodautoscalers.autoscaling  
-```  
+```
 Otro modo mas visual de monitorear los procesos sería habilitando el addons de `dashboard`: `minikube addons dashboard`.   
 <p align="center">
     <img src="./img/dashboard.png" alt="Minikube dashboard" width="700"/>
@@ -246,5 +263,10 @@ Otro modo mas visual de monitorear los procesos sería habilitando el addons de 
     <p align="center">
         <img src="./img/adminer_app.png" alt="Aplicación de Adminer" width="500"/>
     </p>
- 
+## Mejoras futuras
+- Implementar un control de fallos en la aplicación principal, de este modo se podría comprobar el correcto funcionamiento haciendo una llamada `POST` a la aplicación principal y forzar un "fallo" para poder comprobar mejor la reciliencia de la aplicación.  
+- Encriptar los datos sencibles para mayor seguridad con el uso de `Sops` u otro encriptador que sea compatible con Helm.
+- Gestión de logs.  
+- Configura la replicación de la base de datos (por ejemplo, con PostgreSQL streaming replication) para mantener una copia redundante de los datos en un segundo servidor.  
+- Utiliza un sistema de backup para tomar snapshots regulares del volumen persistente.  
   
