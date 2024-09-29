@@ -58,7 +58,8 @@ spec:
       restartPolicy: Always
       imagePullSecrets:
         - name: docker-secret
-  volumeClaimTemplates:          # Añadido
+  #  crea PVCs únicos para cada réplica del StatefulSet, garantizando que cada pod tenga su propio volumen persistente
+  volumeClaimTemplates:          
   - metadata:
       name: postgres-storage
     spec:
