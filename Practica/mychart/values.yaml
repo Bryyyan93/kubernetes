@@ -1,19 +1,17 @@
 ###############################################################
-# Varaibles globales
+# Variiables globales
 replicas: 1
 protocol: TCP
 #strategy: Recreate # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos 
 ###############################################################
-# Imagenes
-# Variables específicas
+# Imagenes en repositorio Docker Hub
 image:
   repo: bryyyan/practica_contendores
-  webtag: appweb-k8s-v3
-  dbtag: appdata-k8s-v2
-  adminer: adminer
+  webtag: appweb-k8s-v3 # Imagen para la applicación web
+  dbtag: appdata-k8s-v2 # Imagen para la base de datos (PosgreSQL)
+  adminer: adminer # Imagen para administrar la DDBB
   admitag: latest
   policy: IfNotPresent
-  pullhub: docker-secret
 ###############################################################
 # Web
 # Variables para el deployment y servicio web
@@ -38,6 +36,7 @@ web:
     maxram: 500Mi
 ###############################################################
 # Base de datos    
+# Variables para el deployment y servicio DDBB
 posgre:
   deploy:
     name: db
@@ -52,6 +51,7 @@ posgre:
     storage: 100Mi # Minimo para iniciar   
 ###############################################################
 # Adminer
+# Variables para el deployment y servicio Adminer
 adminer:
   deploy:
     name: adminer
@@ -71,19 +71,23 @@ secret:
     psqdbname: test1    # DB_NAME     
     psquser: ""         # DB_USER     
     psqpass: ""         # DB_PASS       
+  # Secret con las credenciales para poder descargar desde el repositorio privado
   docker:
     name: docker-secret   
 ###############################################################
-# Balanceador de carga
+# Autoescalado
+#Variables para desplehar el autoescalado horizontal para la apñicación web
 Load:
   name: app-hpa
   spec:
     maxrep: 5 # Numero maximo de replicas
     minrep: 2 # Numero minimo de replicas
   resource:
+    # Se pide un 70% pero para probar lo pongo al 20
     avrcpu: 20 # Modificar el porcentaje de utilizacion de CPU
 ###############################################################
 # Ingress
+# Variableas para desplegar el acceso desde el exterior del cluster.
 Ingress:
   name: web-igrss
   host: 192-168-49-2.nip.io # Se usa la IP de minikube tunel
