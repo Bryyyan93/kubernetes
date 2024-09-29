@@ -30,7 +30,7 @@ web:
     path: /app/logs
     storage: 50Mi # Minimo para iniciar
   resources:
-    mincpu: 5m # Solicita un 10% al iniciar
+    mincpu: 5m # Solicita un 5% al iniciar
   limits:
     maxcpu: 500m
     maxram: 500Mi
