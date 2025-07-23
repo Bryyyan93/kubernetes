@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  #labels:
-  #  app.k8s.io: web
+  labels:
+    app: web
   name: web-igrss
   namespace: default
 spec:

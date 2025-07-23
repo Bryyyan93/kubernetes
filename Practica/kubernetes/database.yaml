@@ -1,21 +1,22 @@
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.k8s.io: db
+    app: db
   name: db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.k8s.io: db
+      app: db
   # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos    
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app.k8s.io: db
+        app: db
     spec:
       containers:
       - name: db
@@ -67,3 +68,19 @@ spec:
         - name: db-data
           persistentVolumeClaim:
             claimName: db-data
+
+# Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: db
+  name: db
+spec:
+  ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: db
