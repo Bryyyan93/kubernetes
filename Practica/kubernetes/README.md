@@ -1,9 +1,13 @@
 # Práctica: Despliegue de una aplicación en Kubernetes    
 ## Configurar la Persistencia de Datos  
-Para asegurar los datos de manera persitente se ha usado el manifiesto`persistentvolumeclaim`.  
-- **db-data-persistentvolumeclaim**: Asegura los datos almacenados en la base de datos desde `db-deployment.yaml`.  
-- **web-claim0-persistentvolumeclaim**: Asegura los datos almacenados para los logs en  `web-deployment.yaml`.  
-La implementacón es similar en ambos casos, aunque la diferenca esta en la llamada. Se usó esta base de código:  
+Para asegurar la persistencia de los datos de la base de datos, se ha realizado un `persistentvolumenclaim` junto con un `deployment` pero se ha reemplazado el `Deployment` por un `StatefulSet`.
+La ventaja del StatefulSet es que permite crear PVCs dinámicamente mediante `volumeClaimTemplates`, evitando la necesidad de definir un PersistentVolumeClaim manual.
+Cada réplica del StatefulSet obtiene su propio volumen persistente con nombre único, asegurando que los datos no se pierdan incluso si el Pod se elimina o reinicia.
+
+Implementación:
+- `db StatefulSet`: define volumeClaimTemplates, lo que genera automáticamente un PVC (por ejemplo, db-data-db-0).
+
+- `web-claim0-persistentvolumeclaim`: se mantiene para la aplicación web (almacena logs).  
 ```  
 apiVersion: v1  
 kind: PersistentVolumeClaim  

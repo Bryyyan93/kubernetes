@@ -1,20 +1,21 @@
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.k8s.io: web
+    app: web
   name: web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.k8s.io: web
+      app: web
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app.k8s.io: web
+        app: web
     spec:
       containers:
       - name: web-srv
@@ -96,3 +97,20 @@ spec:
         - name: web-claim0
           persistentVolumeClaim:
             claimName: web-claim0
+
+# Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: web
+  name: web-srv
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80 # Puerto expuesto al que apunta el Ingress
+      targetPort: 5000 # Puerto interno del contenedor
+  selector:
+    app: web

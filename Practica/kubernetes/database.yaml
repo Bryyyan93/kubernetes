@@ -1,21 +1,23 @@
+# Deployment
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   labels:
-    app.k8s.io: db
+    app: db
   name: db
 spec:
+  serviceName: "db"
   replicas: 1
   selector:
     matchLabels:
-      app.k8s.io: db
+      app: db
   # Cuando se actualialize del Deployment, los pods se eliminarán antes de crear nuevos    
-  strategy:
-    type: Recreate
+  #strategy:
+    #type: Recreate
   template:
     metadata:
       labels:
-        app.k8s.io: db
+        app: db
     spec:
       containers:
       - name: db
@@ -57,13 +59,33 @@ spec:
               name: db-cred
         # Montar un volumen persistente      
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: db-data
+        - name: data 
+          mountPath: /var/lib/postgresql/data
       restartPolicy: Always
       # Necesario para extraer la imagen
       imagePullSecrets:
         - name: docker-secret
-      volumes:
-        - name: db-data
-          persistentVolumeClaim:
-            claimName: db-data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+# Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: db
+  name: db
+spec:
+  ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+  selector:
+    app: db
