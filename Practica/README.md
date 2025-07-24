@@ -53,7 +53,7 @@ mychart/
 Para desplegar Helm se hará uso del siguiente comando: `helm install [nombre_despliegue] [directorio chart]`
 Obteniendo:  
 <p align="center">
-    <img src="./img/despliegue_helm.png" alt="Desplegar Helm" width="500"/>
+    <img src="./docs/helm/img/despliegue_helm.png" alt="Desplegar Helm" width="500"/>
 </p>
   
 ### Configurar la Persistencia de Datos
@@ -112,12 +112,12 @@ Para comprabar su funcionamiento previo a la implementación de los recursos nec
     `kubectl port-forward services/web-srv 8080:80`   
     Obteniendo:  
     <p align="center">
-        <img src="./img/app_web.png" alt="Aplicación web" width="500"/>
+        <img src="./docs/helm/img/app_web.png" alt="Aplicación web" width="500"/>
     </p>
 - Para el caso de `Adminer`:  
     `ubectl port-forward services/adminer-srv 8080:50`    
     <p align="center">
-        <img src="./img/app_adminer.png" alt="Aplicación web de adminer" width="500"/>
+        <img src="./docs/helm/img/app_adminer.png" alt="Aplicación web de adminer" width="500"/>
     </p>
 ### Garantizar la resiliencia de la Aplicación  
 Para garantizar la resiliencia de la aplicación se hará uso de los manifiestos de `LivenessProbe` y `readinessProbe`.  
@@ -146,7 +146,7 @@ Para comprobar su funcionamiento, se puede ver el los logs, ejecutando el siguie
 `kubectl logs web-597dbdbd85-2hv6w`  
 Obteniedo la siguiente respuesta:  
 <p align="center">
-    <img src="./img/verificar_liveness_readiness.png" alt="Respuesta en log de liveness y readiness" width="700"/>
+    <img src="./docs/helm/img/verificar_liveness_readiness.png" alt="Respuesta en log de liveness y readiness" width="700"/>
 </p> 
 
 ### Escalar la Aplicación de manera automática  
@@ -177,7 +177,7 @@ spec:
 Para realizar las pruebas se ha hecho de la siguiente manera:    
 - Comprobar que se esta ejecutando: `kubectl get hpa -w`   
 <p align="center">
-    <img src="./img/hpa_check.png" alt="Verificación del escalado de la aplicación" width="700"/>
+    <img src="./docs/helm/img/hpa_check.png" alt="Verificación del escalado de la aplicación" width="700"/>
 </p>  
 - Aumentar la carga de trabajo para verificar el autoescalado:   
 
@@ -216,7 +216,7 @@ De esta manera se expone la aplicación al exterior del clúster.
 Una vez se ha comprobado el correcto funcionamiento de las distintas partes, continuamos con las comprobaciones finales de l conjunto. Para ello se deberá:
 - Comprobar que los addons antes mencionados están habilitado, para ello se ejecutará el comando `minikube addons list`  
 <p align="center">
-    <img src="./img/addons_list.png" alt="Minikube list" width="700"/>
+    <img src="./docs/helm/img/addons_list.png" alt="Minikube list" width="700"/>
 </p>
 
 - Habilitar el tunel de minikube: `minikube tunel`.    
@@ -228,7 +228,7 @@ Una vez se ha comptabado que lo que necesitamos esta habilitado, continuamos con
 `helm install myapp ./mychart -n maintest --set secret.cred.psquser=prueba1 --set secret.cred.psqpass=prueba1`.  
 
 <p align="center">
-    <img src="./img/helm_final.png" alt="Despliegue final" width="700"/>
+    <img src="./docs/helm/img/helm_final.png" alt="Despliegue final" width="700"/>
 </p> 
 
 Para revisar que el despliegue se ejecute correctamente debemos ejecutar los siguiente comandos para comprobar que no exiten errores:
@@ -240,7 +240,7 @@ kubectl -n maintest get horizontalpodautoscalers.autoscaling
 ```
 Otro modo mas visual de monitorear los procesos sería habilitando el addons de `dashboard`: `minikube addons dashboard`.   
 <p align="center">
-    <img src="./img/dashboard.png" alt="Minikube dashboard" width="700"/>
+    <img src="./docs/helm/img/dashboard.png" alt="Minikube dashboard" width="700"/>
 </p>
 
 - Para añadir contenido a la aplicacion Flask se usará la siguiente petición:  
@@ -253,7 +253,7 @@ Otro modo mas visual de monitorear los procesos sería habilitando el addons de 
     `http://192-168-49-2.nip.io/notes`  
 
     <p align="center">
-        <img src="./img/web_app.png" alt="Aplicación web" width="500"/>
+        <img src="./docs/helm/img/web_app.png" alt="Aplicación web" width="500"/>
     </p>
 
 
@@ -261,7 +261,7 @@ Otro modo mas visual de monitorear los procesos sería habilitando el addons de 
     `http://192-168-49-2.nip.io/admin`  
 
     <p align="center">
-        <img src="./img/adminer_app.png" alt="Aplicación de Adminer" width="500"/>
+        <img src="./docs/helm/img/adminer_app.png" alt="Aplicación de Adminer" width="500"/>
     </p>
 ## Mejoras futuras
 - Implementar un control de fallos en la aplicación principal, de este modo se podría comprobar el correcto funcionamiento haciendo una llamada `POST` a la aplicación principal y forzar un "fallo" para poder comprobar mejor la reciliencia de la aplicación.  
