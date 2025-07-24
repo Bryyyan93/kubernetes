@@ -67,3 +67,20 @@ spec:
       resources:
         requests:
           storage: {{ .Values.posgre.volumen.storage }}  # Tamaño del almacenamiento solicitado
+
+# Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.k8s.io: {{ .Values.posgre.deploy.name }}
+  name: {{ .Values.posgre.service.name }}
+spec:
+  clusterIP: None #Headless service
+  ports:
+    - protocol: {{ .Values.protocol }}
+      port: {{ .Values.posgre.service.targetport }}
+      targetPort: {{ .Values.posgre.service.targetport }}
+  selector:
+    app.k8s.io: {{ .Values.posgre.deploy.name }}

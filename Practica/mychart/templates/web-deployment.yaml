@@ -1,4 +1,4 @@
-
+# Deployment
 apiVersion: {{ .Values.web.deploy.apiver }} 
 kind: Deployment
 metadata:   
@@ -97,3 +97,20 @@ spec:
         - name: {{ .Values.web.volumen.name }}
           persistentVolumeClaim:
             claimName: {{ .Values.web.volumen.name }}                
+
+# Service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.k8s.io: {{ .Values.web.deploy.name }}
+  name: {{ .Values.web.service.name }}
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: {{ .Values.protocol }}
+      port: {{ .Values.web.service.targetport }} # Puerto expuesto al que apunta el Ingress
+      targetPort: {{ .Values.web.deploy.port }} # Puerto interno del contenedor
+  selector:
+    app.k8s.io: {{ .Values.web.deploy.name }}
