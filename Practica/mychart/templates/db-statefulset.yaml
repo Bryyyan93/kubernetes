@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app.k8s.io: {{ .Values.posgre.deploy.name }}
+    app: {{ .Values.posgre.deploy.name }}
   name: {{ .Values.posgre.deploy.name }}
 spec:
   serviceName: {{ .Values.posgre.deploy.name }} 
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app.k8s.io: {{ .Values.posgre.deploy.name }}
+      app: {{ .Values.posgre.deploy.name }}
   template:
     metadata:
       labels:
-        app.k8s.io: {{ .Values.posgre.deploy.name }}
+        app: {{ .Values.posgre.deploy.name }}
     spec:
       containers:
       - name: {{ .Values.posgre.deploy.name }}
@@ -54,14 +54,14 @@ spec:
                 name: db-cred
         volumeMounts:
         - mountPath: {{ .Values.posgre.volumen.path }}
-          name: postgres-storage  # Volumen persistente para cada pod
+          name: {{ .Values.posgre.volumen.name }}  # Volumen persistente para cada pod
       restartPolicy: Always
       imagePullSecrets:
         - name: docker-secret
   #  crea PVCs únicos para cada réplica del StatefulSet, garantizando que cada pod tenga su propio volumen persistente
   volumeClaimTemplates:          
   - metadata:
-      name: postgres-storage
+      name: {{ .Values.posgre.volumen.name }}
     spec:
       accessModes: ["ReadWriteOnce"]
       resources:
@@ -74,7 +74,7 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.k8s.io: {{ .Values.posgre.deploy.name }}
+    app: {{ .Values.posgre.deploy.name }}
   name: {{ .Values.posgre.service.name }}
 spec:
   clusterIP: None #Headless service
@@ -83,4 +83,4 @@ spec:
       port: {{ .Values.posgre.service.targetport }}
       targetPort: {{ .Values.posgre.service.targetport }}
   selector:
-    app.k8s.io: {{ .Values.posgre.deploy.name }}
+    app: {{ .Values.posgre.deploy.name }}

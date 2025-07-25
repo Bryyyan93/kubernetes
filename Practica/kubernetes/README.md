@@ -13,7 +13,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim  
 metadata:  
   labels:  
-    app.k8s.io: db-data  
+    app: db-data  
   name: db-data  
 spec:  
   accessModes:  
@@ -32,7 +32,7 @@ apiVersion: v1
 kind: Secret  
 metadata:  
   labels:  
-    app.k8s.io: db-cred  
+    app: db-cred  
   name: db-cred  
 type: Opaque  
 data:  
@@ -52,7 +52,7 @@ data:
 kind: ConfigMap  
 metadata:  
   labels:  
-    app.k8s.io: db-env-test1-env  
+    app: db-env-test1-env  
   name: env-test1-env  
 ```  
 ## Escalar la Aplicación de manera automática  
@@ -92,7 +92,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   #labels:
-  #  app.k8s.io: web
+  #  app: web
   name: web-igrss
   namespace: default
 spec:

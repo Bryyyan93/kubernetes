@@ -66,7 +66,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   labels:
-    app.k8s.io: {{ .Values.posgre.volumen.name }}
+    app: {{ .Values.posgre.volumen.name }}
   name: {{ .Values.posgre.volumen.name }}
 spec:
   accessModes:
@@ -225,7 +225,7 @@ Una vez se ha comprobado el correcto funcionamiento de las distintas partes, con
 
 Una vez se ha comptabado que lo que necesitamos esta habilitado, continuamos con la ejecución del chart de Helm.  
 - Para desplegar Helm ejecutamos el siguiente comando:  
-`helm install myapp ./mychart -n maintest --set secret.cred.psquser=prueba1 --set secret.cred.psqpass=prueba1`.  
+`helm install myapp ./mychart -n maintest --set secret.cred.psquser=prueba1 --set secret.cred.psqpass=prueba1`  
 
 <p align="center">
     <img src="./docs/helm/img/helm_final.png" alt="Despliegue final" width="700"/>
