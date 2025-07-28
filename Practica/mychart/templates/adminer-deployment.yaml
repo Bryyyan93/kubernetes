@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Values.adminer.deploy.name }}
-  name: {{ .Values.adminer.deploy.name }}
+  name: "{{ .Release.Name }}-{{ .Values.adminer.deploy.name }}"
 spec:
   replicas: {{ .Values.replicas }}
   selector:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - image: "{{ .Values.image.adminer }}:{{ .Values.image.admitag }}"
-          name: {{ .Values.adminer.service.name }}
+          name: "{{ .Release.Name }}-{{ .Values.adminer.service.name }}"
           ports:
             - containerPort: {{ .Values.adminer.deploy.port }}
               protocol: {{ .Values.protocol }}
@@ -27,13 +27,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: "{{ .Release.Name }}-{{ .Values.adminer.service.name }}"
   labels:
     app: {{ .Values.adminer.deploy.name }}
-  name: {{ .Values.adminer.service.name }}
 spec:
   ports:
     - protocol: {{ .Values.protocol }}
-      port: {{ .Values.adminer.service.targetport }}
-      targetPort: {{ .Values.adminer.deploy.port }}
+      port: {{ .Values.adminer.service.targetport }} # 80
+      targetPort: {{ .Values.adminer.deploy.port }} # 8080
   selector:
     app: {{ .Values.adminer.deploy.name }}

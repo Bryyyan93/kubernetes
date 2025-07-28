@@ -42,7 +42,7 @@ posgre:
     name: db
     port: 5432 # Puerto interno del contenedor
   service:
-    name: db
+    name: db-srv
     targetport: 5432 # Puerto expuesto al que apunta el Ingress
   # Volumen donde se guardan los logs de la web  
   volumen:
