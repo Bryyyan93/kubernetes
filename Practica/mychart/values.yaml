@@ -70,10 +70,7 @@ secret:
     psqport: "5432"     # DB_PORT 
     psqdbname: test1    # DB_NAME     
     psquser: ""         # DB_USER     
-    psqpass: ""         # DB_PASS       
-  # Secret con las credenciales para poder descargar desde el repositorio privado
-  docker:
-    name: docker-secret   
+    psqpass: ""         # DB_PASS        
 ###############################################################
 # Autoescalado
 #Variables para desplehar el autoescalado horizontal para la apñicación web

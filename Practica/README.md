@@ -38,16 +38,13 @@ mychart/
 ├── img/
 └── templates/
     ├── adminer-deployment.yaml
-    ├── adminer-service.yaml
     ├── db-data-persistentvolumeclaim.yaml
     ├── db-statefulset.yaml
     ├── db-secret.yaml
-    ├── db-service.yaml
     ├── hub-secret.yaml
-    ├── web-claim0-persistentvolumeclaim.yaml
+    ├── web-persistentvolumeclaim.yaml
     ├── web-deployment.yaml
     ├── web-hpa.yaml
-    ├── web-ingress.yaml
     └── web-service.yaml
 ```
 Para desplegar Helm se hará uso del siguiente comando: `helm install [nombre_despliegue] [directorio chart]`
@@ -61,7 +58,7 @@ Para asegurar los datos de manera persitente se ha usado el manifiesto`persisten
 - **db-data-persistentvolumeclaim**: Asegura los datos almacenados en la base de datos desde `db-staefulset.yaml`.  
 - **web-claim0-persistentvolumeclaim**: Asegura los datos almacenados para los logs en  `web-deployment.yaml`.  
 Para la base de datos se usa el manifiesto de `statefulset.yaml` puesto que están diseñados específicamente para aplicaciones con estado como bases de datos. Asegura que cada pod tenga un identificador único y un volumen persistente asociado.  
-```
+```sh
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -76,7 +73,7 @@ spec:
       storage: {{ .Values.posgre.volumen.storage }}
 ```  
 Para gestionar este manifiesto, se debe modificar el manifiesto de `db-staefulset.yaml` y añadiendo `volumeClaimTemplates`, puesto que este apartado define una plantilla para crear automáticamente PersistentVolumeClaims (PVC) para cada pod.  
-```
+```sh
 volumeClaimTemplates:          
   - metadata:
       name: postgres-storage
@@ -92,7 +89,7 @@ Para gestionar la configuración sencible se ha usado el manifiesto de `secret`.
 - **db-secret.yaml**: Almacenan las variables de configuración para la base de datos, se usarán en los deployments de `db-deployment.yaml` y `web-deployment.yaml`.  
 - **hub-secret.yaml**: Aalmacenan las variables de configuración para descargar las imagenes del repositorio privado de Docker Hub, que se usarán en los deployments de   `db-deployment.yaml` y `web-deployment.yaml`.  
 Se usará la siguiente modelo para administrar los datos sensibles:  
-```  
+```sh  
 apiVersion: v1
 kind: Secret
 metadata:
@@ -122,7 +119,7 @@ Para comprabar su funcionamiento previo a la implementación de los recursos nec
 ### Garantizar la resiliencia de la Aplicación  
 Para garantizar la resiliencia de la aplicación se hará uso de los manifiestos de `LivenessProbe` y `readinessProbe`.  
 Se ha configurado de la siguiente manera:  
-```
+```sh
         # Liveness: verifica si el contenedor está "vivo"
         livenessProbe:
           httpGet:
@@ -153,7 +150,7 @@ Obteniedo la siguiente respuesta:
 Para realizar la escabilidad se ha usado el manifiesto de `HorizontalPodAutoscaler`. Este manifiesto realizará un escalado horizontal.  
 En este apartado se incluye el número minimo de replicas (2) para asegurar que la aplicación siempre esta disponible.  
 - **web-hpa.yaml**: Configuración del nñumero de replicas ademas de la limitación de la CPU.  
-```  
+```sh  
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -186,7 +183,7 @@ kubectl run load-generator-manual --image=busybox --command -- sh -c 'while true
 ### Exponer la Aplicación al exterior  
 Para poder exponer la aplicación al exterior se usará manifiesto del tipo `Ingress` el cual llamamos `web-ingress.yaml`.  
 La configuración es la siguiente:
-```
+```sh
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -232,7 +229,7 @@ Una vez se ha comptabado que lo que necesitamos esta habilitado, continuamos con
 </p> 
 
 Para revisar que el despliegue se ejecute correctamente debemos ejecutar los siguiente comandos para comprobar que no exiten errores:
-```
+```sh
 kubectl -n maintest get pods  
 kubectl -n maintest get services  
 kubectl -n maintest get persistentvolumeclaims   
@@ -243,10 +240,17 @@ Otro modo mas visual de monitorear los procesos sería habilitando el addons de 
     <img src="./docs/helm/img/dashboard.png" alt="Minikube dashboard" width="700"/>
 </p>
 
-- Para añadir contenido a la aplicacion Flask se usará la siguiente petición:  
-  ```   
-  curl -X POST -H "Content-Type: application/json" -d '{"title":"Clase de Docker", "description":"Aprender a crear y manejar contenedores"}' http://192-168-49-2.nip.io:5000/notes  
+- Para añadir contenido a la aplicacion Flask se usará una petición `POST` como por ejemplo:  
+  ```sh   
+  curl -X POST http://192-168-49-2.nip.io/notes \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Prueba","description":"Desde curl"}'
+  
   ```  
+  También se puede visualizar los datos usando una petición `GET`:
+  ```sh
+  curl -X GET http://192-168-49-2.nip.io/notes
+  ```
 - Para poder acceder a la aplicación se deberá hacer de la siguiente manera:  
     
   * La aplicación principal:  
