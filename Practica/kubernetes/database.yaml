@@ -62,9 +62,6 @@ spec:
         - name: data 
           mountPath: /var/lib/postgresql/data
       restartPolicy: Always
-      # Necesario para extraer la imagen
-      imagePullSecrets:
-        - name: docker-secret
   volumeClaimTemplates:
   - metadata:
       name: data
