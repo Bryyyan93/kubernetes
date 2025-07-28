@@ -1,10 +1,10 @@
 # Deployment
-apiVersion: {{ .Values.web.deploy.apiver }} 
+apiVersion: apps/v1
 kind: Deployment
-metadata:   
+metadata:
+  name: "{{ .Release.Name }}-{{ .Values.web.deploy.name }}"
   labels: 
-    app: {{ .Values.web.deploy.name }}
-  name: {{ .Values.web.deploy.name }} 
+    app: {{ .Values.web.deploy.name }} 
 spec:
   replicas: {{ .Values.replicas }}
   selector:
@@ -18,7 +18,7 @@ spec:
         app: {{ .Values.web.deploy.name }}
     spec:
       containers:
-      - name: {{ .Values.web.service.name }} # Nombre del servicio
+      - name: {{ .Values.web.deploy.name }} # Nombre del servicio
         image: "{{ .Values.image.repo }}:{{ .Values.image.webtag }}"
         ports: 
           - containerPort: {{ .Values.web.deploy.port }}
@@ -31,10 +31,7 @@ spec:
         # Definir secretos para la configuracion de la DDBB  
         env:
           - name: DB_HOST
-            valueFrom:
-              secretKeyRef:
-                key: psqhost
-                name: db-cred
+            value: "{{ .Release.Name }}-{{ .Values.posgre.service.name }}"
           - name: DB_NAME
             valueFrom:
               secretKeyRef:
@@ -103,9 +100,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: "{{ .Release.Name }}-{{ .Values.web.service.name }}"
   labels:
     app: {{ .Values.web.deploy.name }}
-  name: {{ .Values.web.service.name }}
 spec:
   type: ClusterIP
   ports:

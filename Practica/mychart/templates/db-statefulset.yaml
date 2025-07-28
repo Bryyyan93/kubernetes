@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
+  name: "{{ .Release.Name }}-{{ .Values.posgre.deploy.name }}"
   labels:
     app: {{ .Values.posgre.deploy.name }}
-  name: {{ .Values.posgre.deploy.name }}
 spec:
-  serviceName: {{ .Values.posgre.deploy.name }} 
+  serviceName: "{{ .Release.Name }}-{{ .Values.posgre.service.name }}"
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
@@ -23,10 +23,7 @@ spec:
           protocol: {{ .Values.protocol }}
         env:
           - name: DB_HOST
-            valueFrom:
-              secretKeyRef:
-                key: psqhost
-                name: db-cred
+            value: "{{ .Release.Name }}-{{ .Values.posgre.service.name }}" # Nuevo cambio
           - name: DB_NAME
             valueFrom:
               secretKeyRef:
@@ -75,7 +72,7 @@ kind: Service
 metadata:
   labels:
     app: {{ .Values.posgre.deploy.name }}
-  name: {{ .Values.posgre.service.name }}
+  name: "{{ .Release.Name }}-{{ .Values.posgre.service.name }}"
 spec:
   clusterIP: None #Headless service
   ports:

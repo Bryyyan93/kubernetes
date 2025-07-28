@@ -16,4 +16,4 @@ spec:
   scaleTargetRef:
     apiVersion: {{ .Values.web.deploy.apiver }} #apps/v1
     kind: Deployment
-    name: {{ .Values.web.deploy.name }} 
+    name: "{{ .Release.Name }}-{{ .Values.web.deploy.name }}" 
