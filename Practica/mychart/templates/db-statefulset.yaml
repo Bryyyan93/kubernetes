@@ -53,8 +53,6 @@ spec:
         - mountPath: {{ .Values.posgre.volumen.path }}
           name: {{ .Values.posgre.volumen.name }}  # Volumen persistente para cada pod
       restartPolicy: Always
-      imagePullSecrets:
-        - name: docker-secret
   #  crea PVCs únicos para cada réplica del StatefulSet, garantizando que cada pod tenga su propio volumen persistente
   volumeClaimTemplates:          
   - metadata:

@@ -84,10 +84,7 @@ spec:
             scheme: HTTP    # Protocolo HTTP
           initialDelaySeconds: 25   # Espera 25 segundos antes de realizar la primera verificación
           periodSeconds: 60         # Verifica cada 60 segundos
-          failureThreshold: 1      # Después de 1 fallo, no dirige tráfico a este contenedor          
-      # Secreto para inicializar docker hub y descargar las imagenes
-      imagePullSecrets:
-        - name: docker-secret      
+          failureThreshold: 1      # Después de 1 fallo, no dirige tráfico a este contenedor              
       restartPolicy: Always
       # Volumen para almacenar logs
       volumes:
